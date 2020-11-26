@@ -11,7 +11,8 @@ public class ActorAnimator : ActorAnimationCallback
     private InputComponent inputComponent;
     private Camera mainCamera;
     private float moveVelocity = 3f;
-    private float moveAccelRate = 0.0f;
+    private float forwardSpeed = 0.0f;
+    private float forwardAccel = 5.0f;
 
     void Awake()
     {
@@ -61,51 +62,43 @@ public class ActorAnimator : ActorAnimationCallback
 
     void OnDirectionEvent(Vector2 dir, Vector2 dirRaw, input_action_state inputState)
     {
-        animator.SetFloat(AnimatorParameter.ForwardSpeed, moveAccelRate);
+        animator.SetFloat(AnimatorParameter.ForwardSpeed, forwardSpeed);
         if (actorStateCtrl.IsInMoveableState() &&
             (inputState == input_action_state.press || inputState == input_action_state.hold))
         {
-            moveAccelRate += Time.deltaTime;
-            if (moveAccelRate > 2.0f)
-            {
-                moveAccelRate = 2.0f;
-            }
+            forwardSpeed += Time.deltaTime * forwardAccel;
+            forwardSpeed = Mathf.Min(forwardSpeed, GlobalDef.MAX_FOWARD_SPEED);
+
             //得到投影向量 为vector到以planeNormal为法向量的平面上。
             Vector3 forward = Vector3.ProjectOnPlane(mainCamera.transform.forward, Vector3.up).normalized;
             Vector3 right = Vector3.ProjectOnPlane(mainCamera.transform.right, Vector3.up).normalized;
 
-            Vector3 forwardDir = forward * dirRaw.y;
-            Vector3 rightDir = right * dirRaw.x;
+            Vector3 forwardDir = forward * dir.y;
+            Vector3 rightDir = right * dir.x;
 
             Vector3 targetDir = (forwardDir + rightDir).normalized;
-            Vector3 targetVelocity = targetDir * moveVelocity * 0.01f;
+            //Vector3 targetVelocity = targetDir * moveVelocity * 0.01f;
             //characterController.SimpleMove(targetVelocity);
 
             float rotateAngle = Vector3.Angle(transform.forward, targetDir);
-            //Debug.Log("forward = " + transform.forward);
-            //Debug.Log("target = " + targetDir);
-            //Debug.Log("Rotate Angle = " + rotateAngle);
             bool isInQuickTurnAngle = actorStateCtrl.IsInQuickTurnAngle(rotateAngle);
-            Debug.Log("moveAccelRate = " + moveAccelRate);
-            if (moveAccelRate > 0.8f && isInQuickTurnAngle)
+            if (forwardSpeed > (GlobalDef.MAX_FOWARD_SPEED / 2)
+                && isInQuickTurnAngle)
             {
-                moveAccelRate = 0f;
+                forwardSpeed = 0f;
                 actorStateCtrl.actorState = actor_state.actor_state_quick_turnn;
                 animator.SetTrigger(AnimatorParameter.QuickTurn180);
             }
             else{
-                if (targetDir != Vector3.zero)
+                if (dir.sqrMagnitude > 0)
                 {
                     transform.forward = targetDir;
                 }
             }
         }
         else{
-            moveAccelRate -= Time.deltaTime * 2;
-            if (moveAccelRate < 0)
-            {
-                moveAccelRate = 0;
-            }
+            forwardSpeed -= Time.deltaTime * forwardAccel;
+            forwardSpeed = Mathf.Max(0, forwardSpeed);
         }
     }
 
@@ -191,7 +184,7 @@ public class ActorAnimator : ActorAnimationCallback
         if (actorStateCtrl.punchNames.Contains(animationName) ||
             actorStateCtrl.kickNames.Contains(animationName))
         {
-            actorStateCtrl.actorState = actor_state.actor_state_idle;
+            actorStateCtrl.actorState = actor_state.actor_state_locomotion;
         }
     }
 
@@ -209,7 +202,7 @@ public class ActorAnimator : ActorAnimationCallback
     public override void OnQuickTurnFinished(string animationName)
     {
         Debug.Log("OnQuickTurnFinished");
-        actorStateCtrl.actorState = actor_state.actor_state_idle;
-        moveAccelRate = 0.5f;
+        actorStateCtrl.actorState = actor_state.actor_state_locomotion;
+        forwardSpeed = GlobalDef.FOWARD_WALK_SPEED;
     }
 }

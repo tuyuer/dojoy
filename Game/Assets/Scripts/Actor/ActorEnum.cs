@@ -1,9 +1,7 @@
 ﻿
 public enum actor_state
 {
-    actor_state_idle = 0,
-    actor_state_walk = 1,
-    actor_state_run = 2,
+    actor_state_locomotion = 0,
     actor_state_punch1 = 3,
     actor_state_punch2 = 4,
     actor_state_punch3 = 5,

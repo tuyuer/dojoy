@@ -17,9 +17,7 @@ public class ActorStateCtrl
     //a list of states when the player can attack
     private List<actor_state> attackableState = new List<actor_state>
     {
-        actor_state.actor_state_idle,
-        actor_state.actor_state_walk,
-        actor_state.actor_state_run,
+        actor_state.actor_state_locomotion,
         actor_state.actor_state_punch1,
         actor_state.actor_state_punch2,
         actor_state.actor_state_punch3,
@@ -31,9 +29,7 @@ public class ActorStateCtrl
     //a list of states when the player can move
     private List<actor_state> moveableState = new List<actor_state>
     {
-        actor_state.actor_state_idle,
-        actor_state.actor_state_walk,
-        actor_state.actor_state_run
+        actor_state.actor_state_locomotion,
     };
 
     //punch names
@@ -68,7 +64,7 @@ public class ActorStateCtrl
 
     public ActorStateCtrl()
     {
-        actorState = actor_state.actor_state_idle;
+        actorState = actor_state.actor_state_locomotion;
         isGrounded = true;
     }
 
