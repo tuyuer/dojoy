@@ -32,6 +32,11 @@ public class ActorStateCtrl
         actor_state.actor_state_locomotion,
     };
 
+    private List<actor_state> dodgeableState = new List<actor_state>
+    {
+        actor_state.actor_state_locomotion,
+    };
+
     //punch names
     public List<string> punchNames = new List<string>
     {
@@ -82,6 +87,16 @@ public class ActorStateCtrl
     {
         if (isGrounded &&
             moveableState.Contains(actorState))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsDodgeableState()
+    {
+        if (isGrounded &&
+            dodgeableState.Contains(actorState))
         {
             return true;
         }

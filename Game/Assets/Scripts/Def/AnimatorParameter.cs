@@ -17,4 +17,6 @@ public class AnimatorParameter : MonoBehaviour
     public const string Kick1 = "Kick1";
     public const string Kick2 = "Kick2";
     public const string Kick3 = "Kick3";
+
+    public const string Dodge = "Dodge";
 }

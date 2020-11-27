@@ -37,14 +37,7 @@ public class InputComponent : MonoBehaviour
 
     void KeyboardControls()
     {
-        //for test
-        if (Input.GetMouseButton(0))
-        {
-            onInputEvent(InputActionNames.O, input_action_state.press);
-        }
-
         bool doubleTapState = false;
-
         foreach (InputControl inputControl in inputControls)
         {
             if (onInputEvent == null) return;
@@ -114,6 +107,7 @@ public class InputComponent : MonoBehaviour
         //attack
         inputControls.Add(new InputControl(InputActionNames.O, KeyCode.J));
         inputControls.Add(new InputControl(InputActionNames.X, KeyCode.K));
+        inputControls.Add(new InputControl(InputActionNames.DODGE, KeyCode.Space));
     }
 
     virtual public void OnInitExternalInputs()

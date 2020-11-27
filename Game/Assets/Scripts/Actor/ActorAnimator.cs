@@ -58,6 +58,10 @@ public class ActorAnimator : ActorAnimationCallback
         {
             OnAttackX();
         }
+        else if (action == InputActionNames.DODGE && actionState == input_action_state.press)
+        {
+            OnDodge();
+        }
     }
 
     void OnDirectionEvent(Vector2 dir, Vector2 dirRaw, input_action_state inputState)
@@ -172,17 +176,25 @@ public class ActorAnimator : ActorAnimationCallback
         }
     }
 
-    void DoAttack()
+    void OnDodge()
     {
-
+        Debug.Log("On Dodge");
+        if (actorStateCtrl.IsInAttackableState())
+        {
+            animator.SetTrigger(AnimatorParameter.Dodge);
+            actorStateCtrl.actorState = actor_state.actor_state_dodge;
+        }
     }
-
     //override method for listening animation end callback
     public override void OnAnimationEnd(string animationName)
     {
         Debug.Log(animationName + " End");
         if (actorStateCtrl.punchNames.Contains(animationName) ||
             actorStateCtrl.kickNames.Contains(animationName))
+        {
+            actorStateCtrl.actorState = actor_state.actor_state_locomotion;
+        }
+        else if (animationName.Equals(AnimatorParameter.Dodge))
         {
             actorStateCtrl.actorState = actor_state.actor_state_locomotion;
         }

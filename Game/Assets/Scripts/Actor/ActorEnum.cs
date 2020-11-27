@@ -2,6 +2,7 @@
 public enum actor_state
 {
     actor_state_locomotion = 0,
+    actor_state_dodge = 1,
     actor_state_punch1 = 3,
     actor_state_punch2 = 4,
     actor_state_punch3 = 5,
