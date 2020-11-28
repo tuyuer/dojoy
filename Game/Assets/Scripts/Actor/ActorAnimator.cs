@@ -86,8 +86,8 @@ public class ActorAnimator : ActorAnimationCallback
 
             float rotateAngle = Vector3.Angle(transform.forward, targetDir);
             bool isInQuickTurnAngle = actorStateCtrl.IsInQuickTurnAngle(rotateAngle);
-            if (forwardSpeed > (GlobalDef.MAX_FOWARD_SPEED / 2)
-                && isInQuickTurnAngle)
+            if (forwardSpeed > GlobalDef.QUICK_TURN_SPEED && 
+                isInQuickTurnAngle)
             {
                 forwardSpeed = 0f;
                 actorStateCtrl.actorState = actor_state.actor_state_quick_turnn;
