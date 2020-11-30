@@ -7,6 +7,7 @@ TagManager:
   - Fly
   - Animal
   - Water
+  - Walkable
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Player
+  - Walkable
   - 
   - 
   - 
