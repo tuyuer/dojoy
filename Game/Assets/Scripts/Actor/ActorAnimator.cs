@@ -81,8 +81,8 @@ public class ActorAnimator : ActorAnimationCallback
             Vector3 rightDir = right * dir.x;
 
             Vector3 targetDir = (forwardDir + rightDir).normalized;
-            //Vector3 targetVelocity = targetDir * moveVelocity * 0.01f;
-            //characterController.SimpleMove(targetVelocity);
+            Vector3 targetVelocity = targetDir * moveVelocity;
+            characterController.SimpleMove(targetVelocity);
 
             float rotateAngle = Vector3.Angle(transform.forward, targetDir);
             bool isInQuickTurnAngle = actorStateCtrl.IsInQuickTurnAngle(rotateAngle);

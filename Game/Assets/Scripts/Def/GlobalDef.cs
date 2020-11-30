@@ -7,6 +7,8 @@ public class GlobalDef
 
     public const float QUICK_TURN_SPEED = MAX_FOWARD_SPEED / 2;
 
+    public const float DODGE_SPEED = 10;
+
     public const float FOWARD_WALK_SPEED = 0.3f;
 
     public const float TIMEOUT_TO_IDLE = 5.0f;

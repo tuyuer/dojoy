@@ -19,7 +19,12 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: 
+    rigImportWarnings: "Avatar Rig Configuration mis-match. Bone length in configuration
+      does not match position in animation file:\n\t'thigh_l' : position error =
+      10.605454 mm\n\t'calf_l' : position error = 10.225700 mm\n\t'foot_l' : position
+      error = 9.268495 mm\n\t'ball_l' : position error = 3.546288 mm\n\t'thigh_r'
+      : position error = 10.437943 mm\n\t'calf_r' : position error = 16.708212 mm\n\t'foot_r'
+      : position error = 11.428408 mm\n\t'ball_r' : position error = 7.084485 mm\n"
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar
@@ -52,8 +57,8 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 1
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
