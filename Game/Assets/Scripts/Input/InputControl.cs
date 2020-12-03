@@ -25,4 +25,5 @@ public class InputActionNames
     public const string X = "X";
     public const string O = "0";
     public const string DODGE = "DODGE";
+    public const string JUMP = "JUMP";
 }

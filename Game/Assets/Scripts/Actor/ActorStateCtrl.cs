@@ -6,8 +6,10 @@ using UnityEngine;
 public class ActorStateCtrl
 {
     public actor_state actorState;
-    public bool isGrounded;
     public float attackComboLeftTime = 0f;
+
+    private Transform actor = null;
+    private CharacterController characterController = null;
 
     //attack combo related
     private combo_type comboType = combo_type.combo_type_none;
@@ -33,6 +35,11 @@ public class ActorStateCtrl
     };
 
     private List<actor_state> dodgeableState = new List<actor_state>
+    {
+        actor_state.actor_state_locomotion,
+    };
+
+    private List<actor_state> jumpableState = new List<actor_state>
     {
         actor_state.actor_state_locomotion,
     };
@@ -67,16 +74,27 @@ public class ActorStateCtrl
         actor_state.actor_state_kick3,
     };
 
-    public ActorStateCtrl()
+    public ActorStateCtrl(Transform actorValue)
     {
+        actor = actorValue;
+        characterController = actorValue.GetComponent<CharacterController>();
         actorState = actor_state.actor_state_locomotion;
-        isGrounded = true;
     }
 
     public bool IsInAttackableState()
     {   
-        if (isGrounded && 
+        if (characterController.isGrounded && 
             attackableState.Contains(actorState))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsInJumpableState()
+    {
+        if (characterController.isGrounded &&
+            jumpableState.Contains(actorState))
         {
             return true;
         }
@@ -85,7 +103,7 @@ public class ActorStateCtrl
 
     public bool IsInMoveableState()
     {
-        if (isGrounded &&
+        if (characterController.isGrounded &&
             moveableState.Contains(actorState))
         {
             return true;
@@ -95,7 +113,7 @@ public class ActorStateCtrl
 
     public bool IsDodgeableState()
     {
-        if (isGrounded &&
+        if (characterController.isGrounded &&
             dodgeableState.Contains(actorState))
         {
             return true;

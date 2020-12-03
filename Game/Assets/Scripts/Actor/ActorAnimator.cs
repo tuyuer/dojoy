@@ -10,14 +10,20 @@ public class ActorAnimator : ActorAnimationCallback
     private CharacterController characterController;
     private InputComponent inputComponent;
     private Camera mainCamera;
-    private float moveVelocity = 3f;
+
+    private Vector3 moveDir = Vector3.zero;             //input dir
+
+    private float dodgeSpeed = 0f;
+    private float jumpSpeed = 0f;
+    private float landTime = 0f;
+
     private float forwardSpeed = 0.0f;
     private float forwardAccel = 5.0f;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
-        actorStateCtrl = new ActorStateCtrl();
+        actorStateCtrl = new ActorStateCtrl(transform);
         characterController = GetComponent<CharacterController>();
         inputComponent = GetComponent<InputComponent>();
         mainCamera = Camera.main;
@@ -45,7 +51,60 @@ public class ActorAnimator : ActorAnimationCallback
     {
         //breath actor state ctrl
         actorStateCtrl.Breathe(Time.deltaTime);
+    }
 
+    void LateUpdate()
+    {
+        if (landTime > 0)
+        {
+            landTime -= Time.deltaTime;
+            if (actorStateCtrl.actorState == actor_state.actor_state_land && landTime <= 0)
+            {
+                actorStateCtrl.actorState = actor_state.actor_state_locomotion;
+            }
+            return;
+        }
+
+        bool isFalling = false;
+        if (characterController.velocity.y < 0.1f)
+        {
+            isFalling = true;
+        }
+        if (characterController.isGrounded)
+        {
+            isFalling = false;
+        }
+
+        animator.SetBool(AnimatorParameter.IsFalling, isFalling);
+
+        //input
+        Vector3 targetSpeed = moveDir * GlobalDef.ACTOR_MOVE_SPEED * Time.fixedDeltaTime;
+
+        //gravity
+        targetSpeed.y -= GlobalDef.WORLD_GRAVITY * Time.fixedDeltaTime;
+
+        //in dodge
+        if (dodgeSpeed > 0)
+        {
+            targetSpeed += transform.forward * dodgeSpeed * Time.fixedDeltaTime;
+            dodgeSpeed -= Time.fixedDeltaTime;
+        }
+
+        //in jump
+        if (jumpSpeed > 0)
+        {
+            targetSpeed += transform.up * jumpSpeed * Time.fixedDeltaTime;
+            jumpSpeed -= Time.fixedDeltaTime * 5;
+        }
+
+        //character move
+        characterController.Move(targetSpeed);
+
+        //set character forward direction
+        if (moveDir.sqrMagnitude > 0)
+        {
+            transform.forward = moveDir;
+        }
     }
 
     void OnInputEvent(string action, input_action_state actionState)
@@ -62,6 +121,10 @@ public class ActorAnimator : ActorAnimationCallback
         {
             OnDodge();
         }
+        else if (action == InputActionNames.JUMP && actionState == input_action_state.press)
+        {
+            OnJump();
+        }
     }
 
     void OnDirectionEvent(Vector2 dir, Vector2 dirRaw, input_action_state inputState)
@@ -71,7 +134,7 @@ public class ActorAnimator : ActorAnimationCallback
             (inputState == input_action_state.press || inputState == input_action_state.hold))
         {
             forwardSpeed += Time.deltaTime * forwardAccel;
-            forwardSpeed = Mathf.Min(forwardSpeed, GlobalDef.MAX_FOWARD_SPEED);
+            forwardSpeed = Mathf.Min(forwardSpeed, GlobalDef.ACTOR_MAX_FOWARD_SPEED);
 
             //得到投影向量 为vector到以planeNormal为法向量的平面上。
             Vector3 forward = Vector3.ProjectOnPlane(mainCamera.transform.forward, Vector3.up).normalized;
@@ -80,29 +143,12 @@ public class ActorAnimator : ActorAnimationCallback
             Vector3 forwardDir = forward * dir.y;
             Vector3 rightDir = right * dir.x;
 
-            Vector3 targetDir = (forwardDir + rightDir).normalized;
-            Vector3 targetVelocity = targetDir * moveVelocity;
-            characterController.SimpleMove(targetVelocity);
-
-            float rotateAngle = Vector3.Angle(transform.forward, targetDir);
-            bool isInQuickTurnAngle = actorStateCtrl.IsInQuickTurnAngle(rotateAngle);
-            if (forwardSpeed > GlobalDef.QUICK_TURN_SPEED && 
-                isInQuickTurnAngle)
-            {
-                forwardSpeed = 0f;
-                actorStateCtrl.actorState = actor_state.actor_state_quick_turnn;
-                animator.SetTrigger(AnimatorParameter.QuickTurn180);
-            }
-            else{
-                if (dir.sqrMagnitude > 0)
-                {
-                    transform.forward = targetDir;
-                }
-            }
+            moveDir = (forwardDir + rightDir).normalized;
         }
         else{
             forwardSpeed -= Time.deltaTime * forwardAccel;
             forwardSpeed = Mathf.Max(0, forwardSpeed);
+            moveDir = Vector3.zero;
         }
     }
 
@@ -178,13 +224,24 @@ public class ActorAnimator : ActorAnimationCallback
 
     void OnDodge()
     {
-        Debug.Log("On Dodge");
         if (actorStateCtrl.IsInAttackableState())
         {
             animator.SetTrigger(AnimatorParameter.Dodge);
             actorStateCtrl.actorState = actor_state.actor_state_dodge;
+            dodgeSpeed = GlobalDef.ACTOR_DODGE_SPEED;
         }
     }
+
+    void OnJump()
+    {
+        if (actorStateCtrl.IsInJumpableState())
+        {
+            animator.SetTrigger(AnimatorParameter.Jump);
+            actorStateCtrl.actorState = actor_state.actor_state_jump;
+            jumpSpeed = GlobalDef.ACTOR_JUMP_SPEED;
+        }
+    }
+
     //override method for listening animation end callback
     public override void OnAnimationEnd(string animationName)
     {
@@ -215,6 +272,14 @@ public class ActorAnimator : ActorAnimationCallback
     {
         Debug.Log("OnQuickTurnFinished");
         actorStateCtrl.actorState = actor_state.actor_state_locomotion;
-        forwardSpeed = GlobalDef.FOWARD_WALK_SPEED;
+        forwardSpeed = GlobalDef.ACTOR_FOWARD_WALK_SPEED;
+    }
+
+    //override method for land groud
+    public override void OnLandGround()
+    {
+        Debug.Log("OnLandGround");
+        actorStateCtrl.actorState = actor_state.actor_state_land;
+        landTime = GlobalDef.ACTOR_LAND_WAIT_TIME;
     }
 }

@@ -3,15 +3,18 @@ using System.Collections.Generic;
 
 public class GlobalDef
 {
-    public const float MAX_FOWARD_SPEED = 2.0f;
-
-    public const float QUICK_TURN_SPEED = MAX_FOWARD_SPEED / 2;
-
-    public const float DODGE_SPEED = 10;
-
-    public const float FOWARD_WALK_SPEED = 0.3f;
-
-    public const float TIMEOUT_TO_IDLE = 5.0f;
-
+    //Common Defines
     public const int INVALID_VALUE = -1;
+
+    //3D World
+    public const float WORLD_GRAVITY = 9.8f;
+
+    //Actor Defines
+    public const float ACTOR_MAX_FOWARD_SPEED = 2.0f;
+    public const float ACTOR_MOVE_SPEED = 1f;
+    public const float ACTOR_DODGE_SPEED = 2.4f;
+    public const float ACTOR_JUMP_SPEED = 16f;
+    public const float ACTOR_LAND_WAIT_TIME = 0.5f;
+    public const float ACTOR_FOWARD_WALK_SPEED = 0.3f;
+    public const float ACTOR_QUICK_TURN_SPEED = ACTOR_MAX_FOWARD_SPEED / 2;
 }

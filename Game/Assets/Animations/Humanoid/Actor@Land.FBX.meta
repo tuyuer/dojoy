@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2a70df37c569835468962abc7f9ffcd7
+guid: 7fcb254b76cb05647b519f6bb069a800
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
@@ -59,7 +59,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.3813559
+      - time: 0.44224423
         functionName: OnLandGround
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: d33e28010586f498aa7018884a2b1638, type: 3}
@@ -82,7 +82,7 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    fileIdsGeneration: 1
+    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -98,7 +98,7 @@ ModelImporter:
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
-    secondaryUVMarginMethod: 0
+    secondaryUVMarginMethod: 1
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
@@ -533,13 +533,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Char1@Land(Clone)
+    - name: Actor@Land(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: -0.08620528, y: -0.34218872, z: -0.0014061778, w: 0.9356675}
       scale: {x: 1, y: 1, z: 1}
     - name: Bip001
-      parentName: Char1@Land(Clone)
+      parentName: Actor@Land(Clone)
       position: {x: -0.02790607, y: 0.49103194, z: 0.011060152}
       rotation: {x: -0.19818668, y: 0.5656877, z: 0.70109653, w: 0.38624248}
       scale: {x: 0.9999997, y: 0.99999976, z: 0.99999994}
