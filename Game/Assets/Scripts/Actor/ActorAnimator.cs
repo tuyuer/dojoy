@@ -13,12 +13,9 @@ public class ActorAnimator : ActorAnimationCallback
 
     private Vector3 moveDir = Vector3.zero;             //input dir
 
-    private float dodgeSpeed = 0f;
     private float jumpSpeed = 0f;
-    private float landTime = 0f;
 
     private float forwardSpeed = 0.0f;
-    private float forwardAccel = 5.0f;
 
     void Awake()
     {
@@ -51,50 +48,31 @@ public class ActorAnimator : ActorAnimationCallback
     {
         //breath actor state ctrl
         actorStateCtrl.Breathe(Time.deltaTime);
-    }
 
-    void LateUpdate()
-    {
-        if (landTime > 0)
-        {
-            landTime -= Time.deltaTime;
-            if (actorStateCtrl.actorState == actor_state.actor_state_land && landTime <= 0)
-            {
-                actorStateCtrl.actorState = actor_state.actor_state_locomotion;
-            }
-            return;
-        }
+        //land
+        if (CheckActorLand()) return;
 
-        bool isFalling = false;
-        if (characterController.velocity.y < 0.1f)
-        {
-            isFalling = true;
-        }
-        if (characterController.isGrounded)
-        {
-            isFalling = false;
-        }
-
-        animator.SetBool(AnimatorParameter.IsFalling, isFalling);
+        //check falling
+        CheckActorFallingStatus();
 
         //input
-        Vector3 targetSpeed = moveDir * GlobalDef.ACTOR_MOVE_SPEED * Time.fixedDeltaTime;
+        Vector3 targetSpeed = moveDir * GlobalDef.ACTOR_MOVE_SPEED * Time.deltaTime;
 
         //gravity
-        targetSpeed.y -= GlobalDef.WORLD_GRAVITY * Time.fixedDeltaTime;
+        targetSpeed.y -= GlobalDef.WORLD_GRAVITY * Time.deltaTime;
 
         //in dodge
+        float dodgeSpeed = animator.GetFloat(AnimatorParameter.DodgeSpeed);
         if (dodgeSpeed > 0)
         {
-            targetSpeed += transform.forward * dodgeSpeed * Time.fixedDeltaTime;
-            dodgeSpeed -= Time.fixedDeltaTime;
+            targetSpeed += transform.forward * dodgeSpeed * GlobalDef.ACTOR_DODGE_SPEED * Time.deltaTime;
         }
-
+        
         //in jump
         if (jumpSpeed > 0)
         {
-            targetSpeed += transform.up * jumpSpeed * Time.fixedDeltaTime;
-            jumpSpeed -= Time.fixedDeltaTime * 5;
+            targetSpeed += transform.up * jumpSpeed * Time.deltaTime;
+            jumpSpeed -= Time.deltaTime * GlobalDef.ACTOR_JUMP_SPEED_ACCEL;
         }
 
         //character move
@@ -106,6 +84,45 @@ public class ActorAnimator : ActorAnimationCallback
             transform.forward = moveDir;
         }
     }
+
+    void CheckActorFallingStatus()
+    {
+        bool isFalling = false;
+        if (characterController.velocity.y < 0.1f)
+        {
+            isFalling = true;
+        }
+        if (characterController.isGrounded)
+        {
+            isFalling = false;
+        }
+        animator.SetBool(AnimatorParameter.IsFalling, isFalling);
+    }
+
+    bool CheckActorLand()
+    {
+        if (actorStateCtrl.actorState == actor_state.actor_state_land)
+        {
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName(AnimatorStateName.Locomotion))
+            {
+                actorStateCtrl.actorState = actor_state.actor_state_locomotion;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    Vector3 CalculateMoveDir(Vector2 dir)
+    {
+        //得到投影向量 为vector到以planeNormal为法向量的平面上。
+        Vector3 forward = Vector3.ProjectOnPlane(mainCamera.transform.forward, Vector3.up).normalized;
+        Vector3 right = Vector3.ProjectOnPlane(mainCamera.transform.right, Vector3.up).normalized;
+
+        Vector3 forwardDir = forward * dir.y;
+        Vector3 rightDir = right * dir.x;
+        return (forwardDir + rightDir).normalized;
+    }
+
 
     void OnInputEvent(string action, input_action_state actionState)
     {
@@ -133,21 +150,19 @@ public class ActorAnimator : ActorAnimationCallback
         if (actorStateCtrl.IsInMoveableState() &&
             (inputState == input_action_state.press || inputState == input_action_state.hold))
         {
-            forwardSpeed += Time.deltaTime * forwardAccel;
-            forwardSpeed = Mathf.Min(forwardSpeed, GlobalDef.ACTOR_MAX_FOWARD_SPEED);
-
-            //得到投影向量 为vector到以planeNormal为法向量的平面上。
-            Vector3 forward = Vector3.ProjectOnPlane(mainCamera.transform.forward, Vector3.up).normalized;
-            Vector3 right = Vector3.ProjectOnPlane(mainCamera.transform.right, Vector3.up).normalized;
-
-            Vector3 forwardDir = forward * dir.y;
-            Vector3 rightDir = right * dir.x;
-
-            moveDir = (forwardDir + rightDir).normalized;
+            forwardSpeed = GlobalDef.ACTOR_MAX_FOWARD_SPEED;
+            moveDir = CalculateMoveDir(dir);
+        }
+        else if (!characterController.isGrounded )
+        {
+            moveDir = CalculateMoveDir(dir);
+        }
+        else if (animator.GetFloat(AnimatorParameter.DodgeSpeed) > 0)
+        {
+            moveDir = transform.forward;
         }
         else{
-            forwardSpeed -= Time.deltaTime * forwardAccel;
-            forwardSpeed = Mathf.Max(0, forwardSpeed);
+            forwardSpeed = 0;
             moveDir = Vector3.zero;
         }
     }
@@ -228,7 +243,6 @@ public class ActorAnimator : ActorAnimationCallback
         {
             animator.SetTrigger(AnimatorParameter.Dodge);
             actorStateCtrl.actorState = actor_state.actor_state_dodge;
-            dodgeSpeed = GlobalDef.ACTOR_DODGE_SPEED;
         }
     }
 
@@ -280,6 +294,5 @@ public class ActorAnimator : ActorAnimationCallback
     {
         Debug.Log("OnLandGround");
         actorStateCtrl.actorState = actor_state.actor_state_land;
-        landTime = GlobalDef.ACTOR_LAND_WAIT_TIME;
     }
 }

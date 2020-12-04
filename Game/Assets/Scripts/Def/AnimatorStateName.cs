@@ -3,5 +3,6 @@ using System.Collections.Generic;
 
 public class AnimatorStateName
 {
-    public const string hurt = "hurt";
+    public const string Idle = "Idle";
+    public const string Locomotion = "Locomotion";
 }

@@ -72,7 +72,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.9798489
+      - time: 0.95530903
         functionName: OnAnimationEnd
         data: Punch1
         objectReferenceParameter: {fileID: 11500000, guid: 91e3cdfd48a778541ac8292d5d328a72, type: 3}
