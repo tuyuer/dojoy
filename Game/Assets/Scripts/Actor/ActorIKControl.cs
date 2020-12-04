@@ -61,10 +61,12 @@ public class ActorIKControl : MonoBehaviour
                 animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandObj.position);
             }
 
-            animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, 1);
-            animator.SetIKRotationWeight(AvatarIKGoal.LeftFoot, 1);
-            animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, 1);
-            animator.SetIKRotationWeight(AvatarIKGoal.RightFoot, 1);
+            float leftFootWeight = animator.GetFloat(AnimatorParameter.LeftFootWeight);
+            float rightFootWeight = animator.GetFloat(AnimatorParameter.RightFootWeight);
+            animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, leftFootWeight);
+            animator.SetIKRotationWeight(AvatarIKGoal.LeftFoot, leftFootWeight);
+            animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, rightFootWeight);
+            animator.SetIKRotationWeight(AvatarIKGoal.RightFoot, rightFootWeight);
 
             //Left Foot
             RaycastHit hit;

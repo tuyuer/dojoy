@@ -22,4 +22,7 @@ public class AnimatorParameter : MonoBehaviour
     public const string DodgeSpeed = "DodgeSpeed";
     public const string Jump  = "Jump";
     public const string IsFalling = "IsFalling";
+
+    public const string LeftFootWeight = "LeftFootWeight";
+    public const string RightFootWeight = "RightFootWeight";
 }
