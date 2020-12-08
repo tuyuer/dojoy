@@ -6,7 +6,6 @@ public class AnimatorParameter : MonoBehaviour
 {
     public const string ForwardSpeed = "ForwardSpeed";
     public const string TimeoutToIdle = "TimeoutToIdle";
-    public const string IsGrounded = "IsGrounded";
     public const string QuickTurn180 = "QuickTurn180";
 
 
@@ -18,6 +17,7 @@ public class AnimatorParameter : MonoBehaviour
     public const string Kick2 = "Kick2";
     public const string Kick3 = "Kick3";
 
+    public const string Vault = "Vault";
     public const string Dodge = "Dodge";
     public const string DodgeSpeed = "DodgeSpeed";
     public const string Jump  = "Jump";

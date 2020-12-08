@@ -12,6 +12,7 @@ public enum actor_state
     actor_state_kick3 = 8,
     actor_state_quick_turnn = 9,
     actor_state_land = 10,
+    actor_state_vault = 11,
 };
 
 public enum combo_type

@@ -101,7 +101,8 @@ public class ActorAnimator : ActorAnimationCallback
 
     bool CheckActorLand()
     {
-        if (actorStateCtrl.actorState == actor_state.actor_state_land)
+        if (actorStateCtrl.actorState == actor_state.actor_state_land ||
+            actorStateCtrl.actorState == actor_state.actor_state_vault)
         {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName(AnimatorStateName.Locomotion))
             {
@@ -250,9 +251,13 @@ public class ActorAnimator : ActorAnimationCallback
     {
         if (actorStateCtrl.IsInJumpableState())
         {
-            animator.SetTrigger(AnimatorParameter.Jump);
-            actorStateCtrl.actorState = actor_state.actor_state_jump;
-            jumpSpeed = GlobalDef.ACTOR_JUMP_SPEED;
+            //animator.SetTrigger(AnimatorParameter.Jump);
+            //actorStateCtrl.actorState = actor_state.actor_state_jump;
+            //jumpSpeed = GlobalDef.ACTOR_JUMP_SPEED;
+
+            animator.SetTrigger(AnimatorParameter.Vault);
+            actorStateCtrl.actorState = actor_state.actor_state_vault;
+            //jumpSpeed = GlobalDef.ACTOR_JUMP_SPEED;
         }
     }
 
