@@ -68,9 +68,9 @@ public class ActorIKControl : MonoBehaviour
             animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, rightFootWeight);
             animator.SetIKRotationWeight(AvatarIKGoal.RightFoot, rightFootWeight);
 
-            //Left Foot
             RaycastHit hit;
 
+            //Left Foot
             // We cast our ray from above the foot in case the current terrain/floor is above the foot position.
             Ray ray = new Ray(animator.GetIKPosition(AvatarIKGoal.LeftFoot) + Vector3.up, Vector3.down);
             if (Physics.Raycast(ray, out hit, DistanceToGround + 2f, layerMask))
@@ -85,6 +85,7 @@ public class ActorIKControl : MonoBehaviour
                 }
             }
 
+            //right foot
             ray = new Ray(animator.GetIKPosition(AvatarIKGoal.RightFoot) + Vector3.up, Vector3.down);
             if (Physics.Raycast(ray, out hit, DistanceToGround + 2f, layerMask))
             {

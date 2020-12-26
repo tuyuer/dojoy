@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(InputComponent))]
 public class ActorAnimator : ActorAnimationCallback
 {
+    private bool applyRootMotion = false;
+    private bool enableCharacterController = true;
+
     private Animator animator;
     private ActorStateCtrl actorStateCtrl;
     private CharacterController characterController;
@@ -12,10 +15,11 @@ public class ActorAnimator : ActorAnimationCallback
     private Camera mainCamera;
 
     private Vector3 moveDir = Vector3.zero;             //input dir
-
     private float jumpSpeed = 0f;
-
     private float forwardSpeed = 0.0f;
+
+    private Vector3 vaultPoint;
+    public Transform RightHand = null;
 
     void Awake()
     {
@@ -46,6 +50,13 @@ public class ActorAnimator : ActorAnimationCallback
     // Update is called once per frame
     void Update()
     {
+        //get current animator state info
+        AnimatorStateInfo animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        //set default status
+        enableCharacterController = characterController.enabled;
+        applyRootMotion = animator.applyRootMotion;
+
         //breath actor state ctrl
         actorStateCtrl.Breathe(Time.deltaTime);
 
@@ -53,40 +64,6 @@ public class ActorAnimator : ActorAnimationCallback
         if (CheckActorLand()) return;
 
         //check falling
-        CheckActorFallingStatus();
-
-        //input
-        Vector3 targetSpeed = moveDir * GlobalDef.ACTOR_MOVE_SPEED * Time.deltaTime;
-
-        //gravity
-        targetSpeed.y -= GlobalDef.WORLD_GRAVITY * Time.deltaTime;
-
-        //in dodge
-        float dodgeSpeed = animator.GetFloat(AnimatorParameter.DodgeSpeed);
-        if (dodgeSpeed > 0)
-        {
-            targetSpeed += transform.forward * dodgeSpeed * GlobalDef.ACTOR_DODGE_SPEED * Time.deltaTime;
-        }
-        
-        //in jump
-        if (jumpSpeed > 0)
-        {
-            targetSpeed += transform.up * jumpSpeed * Time.deltaTime;
-            jumpSpeed -= Time.deltaTime * GlobalDef.ACTOR_JUMP_SPEED_ACCEL;
-        }
-
-        //character move
-        characterController.Move(targetSpeed);
-
-        //set character forward direction
-        if (moveDir.sqrMagnitude > 0)
-        {
-            transform.forward = moveDir;
-        }
-    }
-
-    void CheckActorFallingStatus()
-    {
         bool isFalling = false;
         if (characterController.velocity.y < 0.1f)
         {
@@ -97,16 +74,77 @@ public class ActorAnimator : ActorAnimationCallback
             isFalling = false;
         }
         animator.SetBool(AnimatorParameter.IsFalling, isFalling);
+
+        //input direction
+        Vector3 targetSpeed = moveDir * GlobalDef.ACTOR_MOVE_SPEED * Time.deltaTime;
+
+        //apply gravity
+        if (actorStateCtrl.actorState != actor_state.actor_state_vault)
+        {
+            targetSpeed.y -= GlobalDef.WORLD_GRAVITY * Time.deltaTime;
+        }
+
+        //in dodge
+        float dodgeSpeed = animator.GetFloat(AnimatorParameter.DodgeSpeed);
+        if (dodgeSpeed > 0)
+        {
+            targetSpeed += transform.forward * dodgeSpeed * GlobalDef.ACTOR_DODGE_SPEED * Time.deltaTime;
+        }
+
+        //in jump
+        if (jumpSpeed > 0)
+        {
+            targetSpeed += transform.up * jumpSpeed * Time.deltaTime;
+            jumpSpeed -= Time.deltaTime * GlobalDef.ACTOR_JUMP_SPEED_ACCEL;
+        }
+
+        //in vault
+        if (actorStateCtrl.actorState == actor_state.actor_state_vault)
+        {
+            enableCharacterController = false;
+            applyRootMotion = true;
+        }
+        else
+        {
+            enableCharacterController = true;
+            applyRootMotion = false;
+        }
+
+        //set character status
+        if (animator.applyRootMotion != applyRootMotion)
+        {
+            animator.applyRootMotion = applyRootMotion;
+        }
+
+        //set character controller status
+        if (characterController.enabled != enableCharacterController)
+        {
+            characterController.enabled = enableCharacterController;
+        }
+
+        //character move
+        if (characterController.enabled)
+        {
+            characterController.Move(targetSpeed);
+        }
+
+        //set character forward direction
+        if (moveDir.sqrMagnitude > 0)
+        {
+            transform.forward = moveDir;
+        }
+
+        ProcessMatchTarget();
     }
 
     bool CheckActorLand()
     {
-        if (actorStateCtrl.actorState == actor_state.actor_state_land ||
-            actorStateCtrl.actorState == actor_state.actor_state_vault)
+        if (actorStateCtrl.actorState == actor_state.actor_state_land)
         {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName(AnimatorStateName.Locomotion))
             {
                 actorStateCtrl.actorState = actor_state.actor_state_locomotion;
+                Debug.Log("CheckActorLand.actorState = " + actorStateCtrl.actorState);
             }
             return true;
         }
@@ -158,7 +196,8 @@ public class ActorAnimator : ActorAnimationCallback
         {
             moveDir = CalculateMoveDir(dir);
         }
-        else if (animator.GetFloat(AnimatorParameter.DodgeSpeed) > 0)
+        else if (animator.GetFloat(AnimatorParameter.DodgeSpeed) > 0 ||
+            animator.GetFloat(AnimatorParameter.VaultSpeed) > 0)
         {
             moveDir = transform.forward;
         }
@@ -249,15 +288,50 @@ public class ActorAnimator : ActorAnimationCallback
 
     void OnJump()
     {
-        if (actorStateCtrl.IsInJumpableState())
+        Vector3 matchPoint;
+        if (ProcessVault(out matchPoint))
         {
-            //animator.SetTrigger(AnimatorParameter.Jump);
-            //actorStateCtrl.actorState = actor_state.actor_state_jump;
-            //jumpSpeed = GlobalDef.ACTOR_JUMP_SPEED;
-
+            vaultPoint = matchPoint;
+            Debug.Log(matchPoint);
             animator.SetTrigger(AnimatorParameter.Vault);
             actorStateCtrl.actorState = actor_state.actor_state_vault;
-            //jumpSpeed = GlobalDef.ACTOR_JUMP_SPEED;
+        }
+        else
+        {
+            animator.SetTrigger(AnimatorParameter.Jump);
+            actorStateCtrl.actorState = actor_state.actor_state_jump;
+            jumpSpeed = GlobalDef.ACTOR_JUMP_SPEED;
+        }
+    }
+
+    bool ProcessVault(out Vector3 matchPoint)
+    {
+        matchPoint = Vector3.zero;
+        bool bVaultable = false;
+        RaycastHit hitInfo;
+        Vector3 dir = transform.TransformDirection(Vector3.forward);
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), dir, out hitInfo, 10))
+        {
+            if (hitInfo.collider.tag == TagDef.VaultObject)
+            {
+                matchPoint = hitInfo.point;
+                matchPoint.y = hitInfo.collider.bounds.center.y + hitInfo.collider.bounds.extents.y + 0.35f;
+
+                bVaultable = (hitInfo.distance < 4.0f && hitInfo.distance > 0.5f);
+            }
+        }
+        return bVaultable;
+    }
+
+    void ProcessMatchTarget()
+    {
+        if (animator.IsInTransition(0))
+            return;
+
+        AnimatorStateInfo mState = animator.GetCurrentAnimatorStateInfo(0);
+        if (mState.IsName(AnimatorStateName.Vault))
+        {
+           animator.MatchTarget(vaultPoint, Quaternion.identity, AvatarTarget.RightHand, new MatchTargetWeightMask(Vector3.one, 0), 0.2f, 0.3f);
         }
     }
 
@@ -299,5 +373,10 @@ public class ActorAnimator : ActorAnimationCallback
     {
         Debug.Log("OnLandGround");
         actorStateCtrl.actorState = actor_state.actor_state_land;
+    }
+    public override void OnVaultEnd()
+    {
+        Debug.Log("OnVaultEnd");
+        actorStateCtrl.actorState = actor_state.actor_state_locomotion;
     }
 }

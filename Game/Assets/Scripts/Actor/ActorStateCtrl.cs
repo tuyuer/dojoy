@@ -101,6 +101,16 @@ public class ActorStateCtrl
         return false;
     }
 
+    public bool IsInVaultableState()
+    {
+        if (characterController.isGrounded &&
+            jumpableState.Contains(actorState))
+        {
+            return true;
+        }
+        return false;
+    }
+
     public bool IsInMoveableState()
     {
         if (characterController.isGrounded &&

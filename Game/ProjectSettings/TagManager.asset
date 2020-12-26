@@ -8,6 +8,7 @@ TagManager:
   - Animal
   - Water
   - Walkable
+  - VaultObject
   layers:
   - Default
   - TransparentFX

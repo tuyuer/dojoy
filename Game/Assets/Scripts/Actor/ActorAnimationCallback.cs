@@ -8,4 +8,5 @@ public class ActorAnimationCallback : MonoBehaviour
     public virtual void OnAttackComboBegin(string animationName) { }
     public virtual void OnQuickTurnFinished(string animationName) { }
     public virtual void OnLandGround() { }
+    public virtual void OnVaultEnd() { }
 }
