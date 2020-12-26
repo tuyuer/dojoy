@@ -4,17 +4,118 @@ using UnityEngine;
 
 public class ActorBrain : MonoBehaviour
 {
-    private ClimbAction climbAction;
-    
+    private Camera mainCamera;
+    private InputComponent inputComponent;
+    private ActorBlackboard blackboard;
+
+    public Dictionary<actor_state, ActorAction> actionList = new Dictionary<actor_state, ActorAction>();          
+
     // Start is called before the first frame update
     void Awake()
     {
-        climbAction = GetComponent<ClimbAction>();
+        mainCamera = Camera.main;
+        inputComponent = GetComponent<InputComponent>();
+        blackboard = GetComponent<ActorBlackboard>();
+
+        actionList.Add(actor_state.actor_state_locomotion, new LocomotionAction());
+        actionList.Add(actor_state.actor_state_climb, new ClimbAction());
+
+        foreach (KeyValuePair<actor_state, ActorAction> kv in actionList)
+        {
+            ActorAction actorAction = kv.Value;
+            actorAction.AttachBlackboard(blackboard);
+        }
+    }
+
+    void OnEnable()
+    {
+        inputComponent.onInputEvent += OnInputEvent;
+        inputComponent.onDirectionEvent += OnDirectionEvent;
+    }
+
+    void OnDisable()
+    {
+        inputComponent.onInputEvent -= OnInputEvent;
+        inputComponent.onDirectionEvent -= OnDirectionEvent;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //input direction
+        Vector3 actorSpeed = blackboard.moveDir * GlobalDef.ACTOR_MOVE_SPEED * Time.deltaTime;
+
+        foreach (KeyValuePair<actor_state, ActorAction> kv in actionList)
+        {
+            ActorAction actorAction = kv.Value;
+            bool isActionEnabled = actorAction.ActionType == blackboard.actorState;
+            actorAction.setEnabled(isActionEnabled);
+            if (actorAction.IsEnabled)
+            {
+                actorAction.Update(Time.deltaTime);
+            }
+        }
+
+        //apply gravity
+        actorSpeed.y -= GlobalDef.WORLD_GRAVITY * Time.deltaTime;
+
+        if (blackboard.characterController.enabled)
+        {
+            blackboard.characterController.Move(actorSpeed);
+        }
+    }
+
+
+    void OnInputEvent(string action, input_action_state actionState)
+    {
+        if (action == InputActionNames.JUMP && actionState == input_action_state.press)
+        {
+            OnJump();
+        }
+
+        //if (action == InputActionNames.O && actionState == input_action_state.press)
+        //{
+        //    OnAttackO();
+        //}
+        //else if (action == InputActionNames.X && actionState == input_action_state.press)
+        //{
+        //    OnAttackX();
+        //}
+        //else if (action == InputActionNames.DODGE && actionState == input_action_state.press)
+        //{
+        //    OnDodge();
+        //}
+        //else if (action == InputActionNames.JUMP && actionState == input_action_state.press)
+        //{
+        //    OnJump();
+        //}
+    }
+
+    void OnDirectionEvent(Vector2 dir, Vector2 dirRaw, input_action_state inputState)
+    {
+        //set input dir
+        blackboard.moveDir = CalculateMoveDir(dir, inputState);
+    }
+
+
+    Vector3 CalculateMoveDir(Vector2 dir, input_action_state inputState)
+    {
+        if (inputState == input_action_state.release)
+        {
+            return Vector3.zero;
+        }
+
+        //得到投影向量 为vector到以planeNormal为法向量的平面上。
+        Vector3 forward = Vector3.ProjectOnPlane(mainCamera.transform.forward, Vector3.up).normalized;
+        Vector3 right = Vector3.ProjectOnPlane(mainCamera.transform.right, Vector3.up).normalized;
+
+        Vector3 forwardDir = forward * dir.y;
+        Vector3 rightDir = right * dir.x;
+        return (forwardDir + rightDir).normalized;
+    }
+
+    void OnJump()
+    {
+
     }
 }

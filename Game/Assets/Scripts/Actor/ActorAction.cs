@@ -2,39 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActorAction : MonoBehaviour
+public class ActorAction
 {
     protected Animator animator;
     protected CharacterController characterController;
+    protected ActorBlackboard blackboard;
 
     protected bool applyRootMotion = false;
     protected bool enableCharacterController = true;
 
-    protected bool isEnabled = false;
+    protected bool actionEnabled = false;
 
+    protected actor_state actionType = actor_state.actor_state_locomotion;
 
-    protected virtual void OnRunning() { }
+    public virtual void Update(float deltaTime) { }
+    public virtual void OnEnter() { }
+    public virtual void OnExit() { }
 
-    // Start is called before the first frame update
-    void Awake()
+    public ActorAction()
     {
-        animator = GetComponent<Animator>();
-        characterController = GetComponent<CharacterController>();
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public actor_state ActionType
     {
-        if (!isEnabled)
-        {
-            return;
-        }
-
-        OnRunning();
+        get { return actionType; }
     }
 
-    void SetEnabled(bool bNewValue)
+    public bool IsEnabled
     {
-        isEnabled = bNewValue;
+        get { return actionEnabled; }
     }
+
+    public void setEnabled(bool bEnabled)
+    {
+        actionEnabled = bEnabled;
+    }
+
+    public void AttachBlackboard(ActorBlackboard blackboard)
+    {
+        this.blackboard = blackboard;
+        this.animator = blackboard.animator;
+        this.characterController = blackboard.characterController;
+    }
+
 }

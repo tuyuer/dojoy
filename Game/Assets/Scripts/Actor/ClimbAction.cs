@@ -7,36 +7,46 @@ public class ClimbAction : ActorAction
     private bool isAttachingWall = false;
     private float checkDistance = 1.0f;
 
-    void Awake()
+    public ClimbAction()
     {
+        actionType = actor_state.actor_state_climb;
     }
 
-    public override void OnRunning()
+    public override void Update(float deltaTime)
     {
-        if (!isAttachingWall)
-        {
-            RaycastHit hitInfo;
-            if (Physics.Raycast(transform.position, transform.forward, out hitInfo, checkDistance))
-            {
-                AttachToWall();
-            }
-        }
-        else
-        {
+        Debug.Log("Locomotion Action!!");
+        //    if (!isAttachingWall)
+        //    {
+        //        RaycastHit hitInfo;
+        //        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, checkDistance))
+        //        {
+        //            AttachToWall();
+        //        }
+        //    }
+        //    else
+        //    {
 
-        }
+        //    }
     }
+
+    //protected override void OnRunning()
+    //{
+    //    if (!isAttachingWall)
+    //    {
+    //        RaycastHit hitInfo;
+    //        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, checkDistance))
+    //        {
+    //            AttachToWall();
+    //        }
+    //    }
+    //    else
+    //    {
+
+    //    }
+    //}
 
     void AttachToWall()
     {
 
-    }
-
-    void OnDrawGizmos()
-    {
-        Color originColor = Gizmos.color;
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, .25f);
-        Gizmos.color = originColor;
     }
 }
