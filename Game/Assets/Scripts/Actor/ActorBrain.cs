@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActorBrain : MonoBehaviour
+public class ActorBrain : ActorAnimationCallback
 {
     private Camera mainCamera;
     private InputComponent inputComponent;
@@ -19,6 +19,8 @@ public class ActorBrain : MonoBehaviour
 
         actionList.Add(actor_state.actor_state_locomotion, new LocomotionAction());
         actionList.Add(actor_state.actor_state_climb, new ClimbAction());
+        actionList.Add(actor_state.actor_state_jump, new JumpAction());
+        actionList.Add(actor_state.actor_state_land, new LandAction());
 
         foreach (KeyValuePair<actor_state, ActorAction> kv in actionList)
         {
@@ -45,6 +47,13 @@ public class ActorBrain : MonoBehaviour
         //input direction
         Vector3 actorSpeed = blackboard.moveDir * GlobalDef.ACTOR_MOVE_SPEED * Time.deltaTime;
 
+        //apply gravity
+        actorSpeed.y -= GlobalDef.WORLD_GRAVITY * Time.deltaTime;
+
+        //set actorSpeed to Blackboard
+        blackboard.actorSpeed = actorSpeed;
+
+        //update active action in actionList
         foreach (KeyValuePair<actor_state, ActorAction> kv in actionList)
         {
             ActorAction actorAction = kv.Value;
@@ -54,14 +63,6 @@ public class ActorBrain : MonoBehaviour
             {
                 actorAction.Update(Time.deltaTime);
             }
-        }
-
-        //apply gravity
-        actorSpeed.y -= GlobalDef.WORLD_GRAVITY * Time.deltaTime;
-
-        if (blackboard.characterController.enabled)
-        {
-            blackboard.characterController.Move(actorSpeed);
         }
     }
 
@@ -116,6 +117,15 @@ public class ActorBrain : MonoBehaviour
 
     void OnJump()
     {
+        actionList[actor_state.actor_state_jump].OnEnter();
+    }
 
+
+
+    //override method for land groud
+    public override void OnLandGround()
+    {
+        Debug.Log("OnLandGround");
+        actionList[actor_state.actor_state_land].OnEnter();
     }
 }

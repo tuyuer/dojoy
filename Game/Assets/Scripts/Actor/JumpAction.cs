@@ -12,23 +12,46 @@ public class JumpAction : ActorAction
 
     public override void Update(float deltaTime)
     {
-        base.Update(deltaTime);
+        //check falling
+        bool isFalling = false;
+        if (characterController.velocity.y < 0.1f)
+        {
+            isFalling = true;
+        }
+        if (characterController.isGrounded)
+        {
+            isFalling = false;
+        }
+        animator.SetBool(AnimatorParameter.IsFalling, isFalling);
 
-        float forwardSpeed = 0;
+        if (jumpSpeed > 0)
+        {
+            Vector3 actorSpeed = blackboard.actorSpeed;
+            actorSpeed += blackboard.actor.up * jumpSpeed * deltaTime;
+            jumpSpeed -= deltaTime * GlobalDef.ACTOR_JUMP_SPEED_ACCEL;
+
+            blackboard.actorSpeed = actorSpeed;
+        }
+
         //set character forward direction
         if (blackboard.moveDir.sqrMagnitude > 0)
         {
             blackboard.actor.forward = blackboard.moveDir;
-            forwardSpeed = GlobalDef.ACTOR_MAX_FOWARD_SPEED;
         }
 
-        //animator
-        animator.SetFloat(AnimatorParameter.ForwardSpeed, forwardSpeed);
+        //move chracter
+        if (blackboard.characterController.enabled)
+        {
+            blackboard.characterController.Move(blackboard.actorSpeed);
+        }
     }
 
     public override void OnEnter()
     {
-        base.OnEnter();
+        if (!IsInJumpableState())
+        {
+            return;
+        }
 
         jumpSpeed = GlobalDef.ACTOR_JUMP_SPEED;
         animator.SetTrigger(AnimatorParameter.Jump);
@@ -37,6 +60,19 @@ public class JumpAction : ActorAction
 
     public override void OnExit()
     {
-        base.OnExit();
+    }
+
+    private bool IsInJumpableState()
+    {
+        List<actor_state> jumpableState = new List<actor_state>
+        {
+            actor_state.actor_state_locomotion
+        };
+
+        if (jumpableState.Contains(blackboard.actorState))
+        {
+            return true;
+        }
+        return false;
     }
 }

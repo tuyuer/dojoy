@@ -21,5 +21,11 @@ public class LocomotionAction : ActorAction
 
         //animator
         animator.SetFloat(AnimatorParameter.ForwardSpeed, forwardSpeed);
+
+        //move chracter
+        if (blackboard.characterController.enabled)
+        {
+            blackboard.characterController.Move(blackboard.actorSpeed);
+        }
     }
 }
