@@ -117,7 +117,16 @@ public class ActorBrain : ActorAnimationCallback
 
     void OnJump()
     {
-        actionList[actor_state.actor_state_jump].OnEnter();
+        Vector3 matchPoint;
+        if (CheckVaultable(out matchPoint))
+        {
+            animator.SetTrigger(AnimatorParameter.Vault);
+            actorStateCtrl.actorState = actor_state.actor_state_vault;
+        }
+        else
+        {
+            actionList[actor_state.actor_state_jump].OnEnter();
+        }
     }
 
 
@@ -127,5 +136,24 @@ public class ActorBrain : ActorAnimationCallback
     {
         Debug.Log("OnLandGround");
         actionList[actor_state.actor_state_land].OnEnter();
+    }
+
+    public bool CheckVaultable(out Vector3 matchPoint)
+    {
+        matchPoint = Vector3.zero;
+        bool bVaultable = false;
+        RaycastHit hitInfo;
+        Vector3 dir = transform.TransformDirection(Vector3.forward);
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), dir, out hitInfo, 10))
+        {
+            if (hitInfo.collider.tag == TagDef.VaultObject)
+            {
+                matchPoint = hitInfo.point;
+                matchPoint.y = hitInfo.collider.bounds.center.y + hitInfo.collider.bounds.extents.y + 0.35f;
+
+                bVaultable = (hitInfo.distance < 4.0f && hitInfo.distance > 0.5f);
+            }
+        }
+        return bVaultable;
     }
 }
