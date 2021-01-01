@@ -14,6 +14,8 @@ public enum actor_state
     actor_state_land = 10,
     actor_state_vault = 11,
     actor_state_climb = 12,
+    actor_state_punch = 13,
+    actor_state_sword_attack = 14,
 };
 
 public enum combo_type

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VaultAction : ActorAction
 {
+    private Vector3 matchPoint;
     public VaultAction()
     {
         actionType = actor_state.actor_state_vault;
@@ -11,20 +12,40 @@ public class VaultAction : ActorAction
 
     public override void Update(float deltaTime)
     {
-        if (blackboard.actorState == actor_state.actor_state_vault)
-        {
-           
-        }
+        blackboard.animator.applyRootMotion = true;
+        blackboard.characterController.enabled = false;
+
+        ProcessMatchTarget();
     }
 
-    public override void OnEnter()
+    public override void OnEnter(ArrayList arrayParamList = null)
     {
-        animator.SetTrigger(AnimatorParameter.Vault);
-        blackboard.actorState = actor_state.actor_state_vault;
+        matchPoint = Vector3.zero;
+        //param0: matchPoint
+        if (arrayParamList!=null)
+        {
+            matchPoint = (Vector3)arrayParamList[0];
+            animator.SetTrigger(AnimatorParameter.Vault);
+            blackboard.actorState = actor_state.actor_state_vault;
+        }
     }
 
     public override void OnExit()
     {
-        //blackboard.actorState = actor_state.actor_state_locomotion;
+        blackboard.animator.applyRootMotion = false;
+        blackboard.characterController.enabled = true;
+        blackboard.actorState = actor_state.actor_state_jump;
+    }
+
+    void ProcessMatchTarget()
+    {
+        if (blackboard.animator.IsInTransition(0))
+            return;
+
+        AnimatorStateInfo mState = blackboard.animator.GetCurrentAnimatorStateInfo(0);
+        if (mState.IsName(AnimatorStateName.Vault))
+        {
+            animator.MatchTarget(matchPoint, Quaternion.identity, AvatarTarget.RightHand, new MatchTargetWeightMask(Vector3.one, 0), 0.2f, 0.3f);
+        }
     }
 }

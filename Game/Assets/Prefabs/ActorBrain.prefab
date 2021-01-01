@@ -1181,6 +1181,7 @@ GameObject:
   - component: {fileID: 1936302773411000837}
   - component: {fileID: 720338448584877559}
   - component: {fileID: 720338448584877560}
+  - component: {fileID: 1755520546}
   m_Layer: 8
   m_Name: ActorBrain
   m_TagString: Player
@@ -1291,10 +1292,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f7a00bbecaf8a4489a0a6e52bb1cd63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  characterController: {fileID: 0}
-  actor: {fileID: 0}
+  animator: {fileID: 1936302773411000862}
+  characterController: {fileID: 1936302773411000863}
+  actor: {fileID: 1378111510197629848}
   actorState: 0
+  moveDir: {x: 0, y: 0, z: 0}
+  actorSpeed: {x: 0, y: 0, z: 0}
 --- !u!114 &720338448584877560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1307,6 +1310,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51040ad3fe06bfa43ab5249f3ea9ac7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1755520546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378111510197530552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb143e0fb69b240c0bc83fef86e9235f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  lookAtWeight: 1
+  rightHandWeight: 0
+  DistanceToGround: 0.12
+  lookObj: {fileID: 0}
+  rightHandObj: {fileID: 0}
 --- !u!1 &1378111510197530554
 GameObject:
   m_ObjectHideFlags: 0

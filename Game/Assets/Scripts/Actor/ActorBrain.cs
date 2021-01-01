@@ -8,7 +8,9 @@ public class ActorBrain : ActorAnimationCallback
     private InputComponent inputComponent;
     private ActorBlackboard blackboard;
 
-    public Dictionary<actor_state, ActorAction> actionList = new Dictionary<actor_state, ActorAction>();          
+    public Dictionary<actor_state, ActorAction> actionList = new Dictionary<actor_state, ActorAction>();
+
+    public Transform swordSocket;
 
     // Start is called before the first frame update
     void Awake()
@@ -17,10 +19,16 @@ public class ActorBrain : ActorAnimationCallback
         inputComponent = GetComponent<InputComponent>();
         blackboard = GetComponent<ActorBlackboard>();
 
+        swordSocket.gameObject.SetActive(false);
+
         actionList.Add(actor_state.actor_state_locomotion, new LocomotionAction());
         actionList.Add(actor_state.actor_state_climb, new ClimbAction());
         actionList.Add(actor_state.actor_state_jump, new JumpAction());
         actionList.Add(actor_state.actor_state_land, new LandAction());
+        actionList.Add(actor_state.actor_state_vault, new VaultAction());
+        actionList.Add(actor_state.actor_state_dodge, new DodgeAction());
+        actionList.Add(actor_state.actor_state_punch, new PunchAction());
+        actionList.Add(actor_state.actor_state_sword_attack, new SwordAttackAction());
 
         foreach (KeyValuePair<actor_state, ActorAction> kv in actionList)
         {
@@ -73,6 +81,29 @@ public class ActorBrain : ActorAnimationCallback
         {
             OnJump();
         }
+        else if (action == InputActionNames.DODGE && actionState == input_action_state.press)
+        {
+            OnDodge();
+        }
+        else if (action == InputActionNames.O && actionState == input_action_state.press)
+        {
+            OnAttackO();
+        }
+        else if (action == InputActionNames.SHOWSWORD && actionState == input_action_state.press)
+        {
+            if (!blackboard.showSword)
+            {
+                blackboard.showSword = true;
+                blackboard.animator.SetBool(AnimatorParameter.ShowSword, true);
+                swordSocket.gameObject.SetActive(true);
+            }
+            else
+            {
+                blackboard.showSword = false;
+                blackboard.animator.SetBool(AnimatorParameter.ShowSword, false);
+                swordSocket.gameObject.SetActive(false);
+            }
+        }
 
         //if (action == InputActionNames.O && actionState == input_action_state.press)
         //{
@@ -120,8 +151,9 @@ public class ActorBrain : ActorAnimationCallback
         Vector3 matchPoint;
         if (CheckVaultable(out matchPoint))
         {
-            animator.SetTrigger(AnimatorParameter.Vault);
-            actorStateCtrl.actorState = actor_state.actor_state_vault;
+            ArrayList arrayList = new ArrayList();
+            arrayList.Add(matchPoint);
+            actionList[actor_state.actor_state_vault].OnEnter(arrayList);
         }
         else
         {
@@ -129,13 +161,43 @@ public class ActorBrain : ActorAnimationCallback
         }
     }
 
+    void OnDodge()
+    {
+        actionList[actor_state.actor_state_dodge].OnEnter();
+    }
 
+    void OnAttackO()
+    {
+        if (blackboard.showSword)
+        {
+            actionList[actor_state.actor_state_sword_attack].OnEnter();
+        }
+        else
+        {
+            actionList[actor_state.actor_state_punch].OnEnter();
+        }
+    }
+
+    public override void OnAnimationEnd(string animationName)
+    {
+        Debug.Log(animationName + " End");
+        if (animationName.Equals(AnimatorParameter.Dodge))
+        {
+            actionList[actor_state.actor_state_dodge].OnExit();
+        }
+    }
 
     //override method for land groud
     public override void OnLandGround()
     {
         Debug.Log("OnLandGround");
         actionList[actor_state.actor_state_land].OnEnter();
+    }
+
+    public override void OnVaultEnd()
+    {
+        Debug.Log("OnVaultEnd");
+        actionList[actor_state.actor_state_vault].OnExit();
     }
 
     public bool CheckVaultable(out Vector3 matchPoint)

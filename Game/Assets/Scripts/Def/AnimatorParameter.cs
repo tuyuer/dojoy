@@ -8,10 +8,13 @@ public class AnimatorParameter : MonoBehaviour
     public const string TimeoutToIdle = "TimeoutToIdle";
     public const string QuickTurn180 = "QuickTurn180";
 
-
     public const string Punch1 = "Punch1";
     public const string Punch2 = "Punch2";
     public const string Punch3 = "Punch3";
+
+    public const string SwordAttack1 = "SwordAttack1";
+    public const string SwordAttack2 = "SwordAttack2";
+    public const string SwordAttack3 = "SwordAttack3";
 
     public const string Kick1 = "Kick1";
     public const string Kick2 = "Kick2";
@@ -23,6 +26,7 @@ public class AnimatorParameter : MonoBehaviour
     public const string DodgeSpeed = "DodgeSpeed";
     public const string Jump  = "Jump";
     public const string IsFalling = "IsFalling";
+    public const string ShowSword = "ShowSword";
 
     public const string LeftFootWeight = "LeftFootWeight";
     public const string RightFootWeight = "RightFootWeight";

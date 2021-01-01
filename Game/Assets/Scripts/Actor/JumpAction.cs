@@ -46,7 +46,7 @@ public class JumpAction : ActorAction
         }
     }
 
-    public override void OnEnter()
+    public override void OnEnter(ArrayList arrayParamList = null)
     {
         if (!IsInJumpableState())
         {

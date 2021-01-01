@@ -105,10 +105,11 @@ public class InputComponent : MonoBehaviour
     void InitKeyboardInputs()
     {
         //attack
-        inputControls.Add(new InputControl(InputActionNames.O, KeyCode.J));
+        inputControls.Add(new InputControl(InputActionNames.O, KeyCode.Mouse0));
         inputControls.Add(new InputControl(InputActionNames.X, KeyCode.K));
         inputControls.Add(new InputControl(InputActionNames.DODGE, KeyCode.E));
         inputControls.Add(new InputControl(InputActionNames.JUMP, KeyCode.Space));
+        inputControls.Add(new InputControl(InputActionNames.SHOWSWORD, KeyCode.R));
     }
 
     virtual public void OnInitExternalInputs()

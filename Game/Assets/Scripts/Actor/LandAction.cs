@@ -29,9 +29,11 @@ public class LandAction : ActorAction
         }
     }
 
-    public override void OnEnter()
+    public override void OnEnter(ArrayList arrayParamList = null)
     {
         blackboard.actorState = actor_state.actor_state_land;
+        //animator
+        animator.SetFloat(AnimatorParameter.ForwardSpeed, 0);
     }
 
     public override void OnExit()

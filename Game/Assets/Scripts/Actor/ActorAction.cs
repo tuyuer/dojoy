@@ -16,8 +16,9 @@ public class ActorAction
     protected actor_state actionType = actor_state.actor_state_locomotion;
 
     public virtual void Update(float deltaTime) { }
-    public virtual void OnEnter() { }
+    public virtual void OnEnter(ArrayList arrayParamList = null) { }
     public virtual void OnExit() { }
+    public virtual bool CanTriggerAction() { return true; }
 
     public ActorAction()
     {
