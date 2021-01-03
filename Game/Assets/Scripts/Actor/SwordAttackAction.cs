@@ -6,16 +6,16 @@ using UnityEngine;
 public class SwordAttackAction : ActorAction
 {
     private int attackStep = 0;
-    private float animationFinishNormalizedTime = 0.8f;
+    private float animationFinishNormalizedTime = 0.95f;
     private int autoTriggerNextStep = -1;
     private float autoTriggerNextConsumeTime = 0.5f;
     private float autoTriggerNextElapsedTime = 0f;
 
     private List<string> attackNames = new List<string>
     {
-        AnimatorParameter.SwordAttack1,
-        AnimatorParameter.SwordAttack2,
-        AnimatorParameter.SwordAttack3
+        "SwordAttack1",
+        "SwordAttack2",
+        "SwordAttack3"
     };
 
     public SwordAttackAction()
@@ -49,7 +49,7 @@ public class SwordAttackAction : ActorAction
         {
             if (stateInfo.IsName(attackNames[attackStep]))
             {
-                if (normalizedTime > 0.95f)
+                if (normalizedTime > animationFinishNormalizedTime)
                 {
                     OnExit();
                 }
@@ -82,7 +82,7 @@ public class SwordAttackAction : ActorAction
     public override void OnExit()
     {
         attackStep = 0;
-        autoTriggerNextStep = 0;
+        autoTriggerNextStep = -1;
         ClearTriggers();
         blackboard.actorState = actor_state.actor_state_locomotion;
         Debug.Log("swordAttackAction OnExit()");
@@ -111,6 +111,7 @@ public class SwordAttackAction : ActorAction
         {
             blackboard.animator.SetBool(attackNames[i], i == nStep);
         }
+        blackboard.sowrdEffectSocket.PlayEfect(nStep);
     }
 
     private void ClearTriggers()

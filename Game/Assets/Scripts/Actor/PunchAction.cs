@@ -5,17 +5,17 @@ using UnityEngine;
 public class PunchAction : ActorAction
 {
     private int attackStep = 0;
-    private float attackCombTime = 0.5f;
-    private float animationFinishNormalizedTime = 0.9f;
+    private float animationFinishNormalizedTime = 0.8f;
+    private int autoTriggerNextStep = -1;
+    private float autoTriggerNextConsumeTime = 0.5f;
+    private float autoTriggerNextElapsedTime = 0f;
 
     private List<string> attackNames = new List<string>
     {
-        AnimatorParameter.Punch1,
-        AnimatorParameter.Punch2,
-        AnimatorParameter.Punch3
+        "ActorPunch1",
+        "ActorPunch2",
+        "ActorPunch3",
     };
-
-    private List<KeyCodeEvent> punchEventList = new List<KeyCodeEvent>();
 
     public PunchAction()
     {
@@ -24,22 +24,35 @@ public class PunchAction : ActorAction
 
     public override void Update(float deltaTime)
     {
-        AnimatorStateInfo animatorStateInfo = blackboard.animator.GetCurrentAnimatorStateInfo(0);
-        float normalizedTime = animatorStateInfo.normalizedTime;
-        if (animator.IsInTransition(0) &&
-            normalizedTime >= animationFinishNormalizedTime)
+        if (autoTriggerNextElapsedTime > 0)
         {
-            if (punchEventList.Count > 0)
+            autoTriggerNextElapsedTime -= deltaTime;
+            return;
+        }
+
+        AnimatorStateInfo stateInfo = blackboard.animator.GetCurrentAnimatorStateInfo(0);
+        float normalizedTime = stateInfo.normalizedTime;
+        if (autoTriggerNextStep > attackStep) //only combo big attackStep
+        {
+            if (stateInfo.IsName(attackNames[attackStep]))
             {
-                //auto trigger next punch
-                blackboard.animator.SetTrigger(attackNames[attackStep]);
-                attackStep++;
-                attackStep = attackStep % 3;
-                punchEventList.Clear();
+                if (normalizedTime > 0.9f)
+                {
+                    TriggerStep(autoTriggerNextStep);
+                    attackStep = autoTriggerNextStep;
+                    autoTriggerNextElapsedTime = autoTriggerNextConsumeTime;
+                }
             }
-            else
+        }
+        else
+        {
+            Debug.Log("normalized time = " + normalizedTime);
+            if (stateInfo.IsName(attackNames[attackStep]))
             {
-                OnExit();
+                if (normalizedTime > animationFinishNormalizedTime)
+                {
+                    OnExit();
+                }
             }
         }
     }
@@ -50,38 +63,60 @@ public class PunchAction : ActorAction
         {
             if (blackboard.actorState == actor_state.actor_state_punch)
             {
-                if (punchEventList.Count == 0)
+                AnimatorStateInfo animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                if (animatorStateInfo.normalizedTime > 0.3f)
                 {
-                    AnimatorStateInfo animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                    if (animatorStateInfo.normalizedTime > 0.5f)
-                    {
-                        punchEventList.Add(new KeyCodeEvent());
-                    }
+                    int nNextStep = GetNextAttackStep();
+                    autoTriggerNextStep = nNextStep;
                 }
             }
             else
             {
-                blackboard.animator.SetTrigger(attackNames[attackStep]);
+                TriggerStep(attackStep);
                 blackboard.actorState = actor_state.actor_state_punch;
-                attackStep++;
-                attackStep = attackStep % 3;
+                autoTriggerNextStep = attackStep;
             }
         }
     }
 
     public override void OnExit()
     {
+        attackStep = 0;
+        autoTriggerNextStep = -1;
+        ClearTriggers();
         blackboard.actorState = actor_state.actor_state_locomotion;
-        Debug.Log("punchAction OnExit()");
     }
 
     public override bool CanTriggerAction()
     {
         if (blackboard.characterController.isGrounded &&
-            blackboard.actorState == actor_state.actor_state_locomotion)
+            (blackboard.actorState == actor_state.actor_state_locomotion ||
+             blackboard.actorState == actor_state.actor_state_punch))
         {
             return true;
         }
         return false;
+    }
+
+    private int GetNextAttackStep()
+    {
+        int nNextStep = attackStep + 1;
+        return nNextStep % 3;
+    }
+
+    private void TriggerStep(int nStep)
+    {
+        for (int i = 0; i < attackNames.Count; i++)
+        {
+            blackboard.animator.SetBool(attackNames[i], i == nStep);
+        }
+    }
+
+    private void ClearTriggers()
+    {
+        for (int i = 0; i < attackNames.Count; i++)
+        {
+            blackboard.animator.SetBool(attackNames[i], false);
+        }
     }
 }

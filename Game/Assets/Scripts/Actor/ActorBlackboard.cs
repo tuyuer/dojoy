@@ -8,6 +8,9 @@ public class ActorBlackboard : MonoBehaviour
     public CharacterController characterController;
     public Transform actor;
 
+    public Transform swordSocket;
+    public SwordEffectSocket sowrdEffectSocket;
+
     public bool showSword = false;
 
     public actor_state actorState = actor_state.actor_state_locomotion;

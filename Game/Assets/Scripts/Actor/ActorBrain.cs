@@ -9,8 +9,7 @@ public class ActorBrain : ActorAnimationCallback
     private ActorBlackboard blackboard;
 
     public Dictionary<actor_state, ActorAction> actionList = new Dictionary<actor_state, ActorAction>();
-
-    public Transform swordSocket;
+    private object swordSocket;
 
     // Start is called before the first frame update
     void Awake()
@@ -19,7 +18,7 @@ public class ActorBrain : ActorAnimationCallback
         inputComponent = GetComponent<InputComponent>();
         blackboard = GetComponent<ActorBlackboard>();
 
-        swordSocket.gameObject.SetActive(false);
+        blackboard.swordSocket.gameObject.SetActive(false);
 
         actionList.Add(actor_state.actor_state_locomotion, new LocomotionAction());
         actionList.Add(actor_state.actor_state_climb, new ClimbAction());
@@ -95,32 +94,15 @@ public class ActorBrain : ActorAnimationCallback
             {
                 blackboard.showSword = true;
                 blackboard.animator.SetBool(AnimatorParameter.ShowSword, true);
-                swordSocket.gameObject.SetActive(true);
+                blackboard.swordSocket.gameObject.SetActive(true);
             }
             else
             {
                 blackboard.showSword = false;
                 blackboard.animator.SetBool(AnimatorParameter.ShowSword, false);
-                swordSocket.gameObject.SetActive(false);
+                blackboard.swordSocket.gameObject.SetActive(false);
             }
         }
-
-        //if (action == InputActionNames.O && actionState == input_action_state.press)
-        //{
-        //    OnAttackO();
-        //}
-        //else if (action == InputActionNames.X && actionState == input_action_state.press)
-        //{
-        //    OnAttackX();
-        //}
-        //else if (action == InputActionNames.DODGE && actionState == input_action_state.press)
-        //{
-        //    OnDodge();
-        //}
-        //else if (action == InputActionNames.JUMP && actionState == input_action_state.press)
-        //{
-        //    OnJump();
-        //}
     }
 
     void OnDirectionEvent(Vector2 dir, Vector2 dirRaw, input_action_state inputState)
