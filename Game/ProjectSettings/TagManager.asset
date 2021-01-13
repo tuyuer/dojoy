@@ -9,6 +9,7 @@ TagManager:
   - Water
   - Walkable
   - VaultObject
+  - WayPoint
   layers:
   - Default
   - TransparentFX
