@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WayPoint : MonoBehaviour
 {
+    public way_point_type pointType = way_point_type.way_point_type_patrol;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +21,11 @@ public class WayPoint : MonoBehaviour
     void OnDrawGizmos()
     {
         Color originColor = Gizmos.color;
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position, 0.1f);
+        if (pointType == way_point_type.way_point_type_patrol)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(transform.position, 0.1f);
+        }
         Gizmos.color = originColor;
     }
 }
