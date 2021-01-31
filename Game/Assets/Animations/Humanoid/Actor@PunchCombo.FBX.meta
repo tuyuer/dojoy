@@ -65,17 +65,10 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.7692308
-        functionName: OnAttackComboBegin
-        data: Punch1
-        objectReferenceParameter: {fileID: 11500000, guid: 91e3cdfd48a778541ac8292d5d328a72, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
       - time: 0.95530903
         functionName: OnAnimationEnd
         data: Punch1
-        objectReferenceParameter: {fileID: 11500000, guid: 91e3cdfd48a778541ac8292d5d328a72, type: 3}
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -108,17 +101,10 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.7079208
-        functionName: OnAttackComboBegin
-        data: Punch2
-        objectReferenceParameter: {fileID: 11500000, guid: 91e3cdfd48a778541ac8292d5d328a72, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
       - time: 0.980198
         functionName: OnAnimationEnd
         data: Punch2
-        objectReferenceParameter: {fileID: 11500000, guid: 91e3cdfd48a778541ac8292d5d328a72, type: 3}
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -151,17 +137,10 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.6917233
-        functionName: OnAttackComboBegin
-        data: Punch3
-        objectReferenceParameter: {fileID: 11500000, guid: 91e3cdfd48a778541ac8292d5d328a72, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
       - time: 0.9851485
         functionName: OnAnimationEnd
         data: Punch3
-        objectReferenceParameter: {fileID: 11500000, guid: 91e3cdfd48a778541ac8292d5d328a72, type: 3}
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

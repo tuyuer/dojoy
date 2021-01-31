@@ -1675,6 +1675,8 @@ GameObject:
   - component: {fileID: 6765761870169211740}
   - component: {fileID: 1014027843}
   - component: {fileID: 1335890694}
+  - component: {fileID: 229801847}
+  - component: {fileID: 6355196595712380262}
   m_Layer: 0
   m_Name: ActorBolt
   m_TagString: Untagged
@@ -1823,7 +1825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data:
-    _json: '{"declarations":{"collection":{"$content":[{"name":"moveDestination","value":{"x":0.0,"y":0.0,"z":0.0,"$type":"UnityEngine.Vector3"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
+    _json: '{"declarations":{"collection":{"$content":[{"name":"Event_MakeDecision_To_MoveToAttackPoint","value":{"$content":"Event_MakeDecision_To_MoveToAttackPoint","$type":"System.String"},"$version":"A"},{"name":"Event_MakeDecision_To_Attack","value":{"$content":"Event_MakeDecision_To_Attack","$type":"System.String"},"$version":"A"},{"name":"Event_MoveToAttackPoint_To_MakeDecision","value":{"$content":"Event_MoveToAttackPoint_To_MakeDecision","$type":"System.String"},"$version":"A"},{"name":"Event_Attack_To_MakeDecision","value":{"$content":"Event_Attack_To_MakeDecision","$type":"System.String"},"$version":"A"},{"name":"Event_Exit_Combat","value":{"$content":"Event_Exit_Combat","$type":"System.String"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
 --- !u!195 &6765761870169211740
 NavMeshAgent:
@@ -1884,6 +1886,35 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &229801847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3942132761351567207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -57143145, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"ActorBolt","summary":null,"pan":{"x":23.5,"y":-50.0},"zoom":1.0,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":-204.0,"y":-144.0},"guid":"e946718e-41e7-4d4d-8458-0b79a1d56d6f","$version":"A","$type":"Bolt.Start","$id":"10"},{"coroutine":false,"defaultValues":{},"position":{"x":-204.0,"y":60.0},"guid":"0630e69a-0129-4c2f-9930-56f5661f1174","$version":"A","$type":"Bolt.Update"},{"nest":{"source":"Macro","macro":0,"embed":null},"defaultValues":{},"position":{"x":14.0,"y":-145.0},"guid":"7b7aa24b-e73e-4575-98f1-28704af423f1","$version":"A","$type":"Bolt.SuperUnit","$id":"14"},{"type":"System.Boolean","value":{"$content":true,"$type":"System.Boolean"},"defaultValues":{},"position":{"x":-96.0,"y":-47.0},"guid":"2d18e851-fa38-43c8-94af-a5259d4c7ba2","$version":"A","$type":"Bolt.Literal","$id":"17"},{"sourceUnit":{"$ref":"10"},"sourceKey":"trigger","destinationUnit":{"$ref":"14"},"destinationKey":"Sword
+      Show","guid":"14c487c9-04d9-49fd-9d27-f9a1d1bccc54","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"17"},"sourceKey":"output","destinationUnit":{"$ref":"14"},"destinationKey":"showSword","guid":"80b6b6df-2b9d-4cda-a584-7bc80427c0a6","$type":"Bolt.ValueConnection"}],"$version":"A"}}}'
+    _objectReferences:
+    - {fileID: 11400000, guid: cdc4991753a21c442bf86846594f163e, type: 2}
+--- !u!114 &6355196595712380262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3942132761351567207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5fa4a8f1545ca4fbd07e6fd746136f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3942132761351567209
 GameObject:
   m_ObjectHideFlags: 0

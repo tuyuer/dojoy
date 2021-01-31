@@ -10,6 +10,7 @@ TagManager:
   - Walkable
   - VaultObject
   - WayPoint
+  - Enemy
   layers:
   - Default
   - TransparentFX

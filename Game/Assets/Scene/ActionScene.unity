@@ -591,28 +591,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &229801846 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3942132761351567207, guid: 3b10bb0d9ced5c6428528389709e13d0, type: 3}
-  m_PrefabInstance: {fileID: 7733125103195239487}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &229801847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 229801846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -57143145, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"ActorBolt","summary":null,"pan":{"x":23.5,"y":-50.0},"zoom":1.0,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":-204.0,"y":-144.0},"guid":"e946718e-41e7-4d4d-8458-0b79a1d56d6f","$version":"A","$type":"Bolt.Start","$id":"10"},{"coroutine":false,"defaultValues":{},"position":{"x":-204.0,"y":60.0},"guid":"0630e69a-0129-4c2f-9930-56f5661f1174","$version":"A","$type":"Bolt.Update"},{"nest":{"source":"Macro","macro":0,"embed":null},"defaultValues":{},"position":{"x":14.0,"y":-145.0},"guid":"7b7aa24b-e73e-4575-98f1-28704af423f1","$version":"A","$type":"Bolt.SuperUnit","$id":"14"},{"type":"System.Boolean","value":{"$content":true,"$type":"System.Boolean"},"defaultValues":{},"position":{"x":-96.0,"y":-47.0},"guid":"2d18e851-fa38-43c8-94af-a5259d4c7ba2","$version":"A","$type":"Bolt.Literal","$id":"17"},{"sourceUnit":{"$ref":"10"},"sourceKey":"trigger","destinationUnit":{"$ref":"14"},"destinationKey":"Sword
-      Show","guid":"14c487c9-04d9-49fd-9d27-f9a1d1bccc54","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"17"},"sourceKey":"output","destinationUnit":{"$ref":"14"},"destinationKey":"showSword","guid":"80b6b6df-2b9d-4cda-a584-7bc80427c0a6","$type":"Bolt.ValueConnection"}],"$version":"A"}}}'
-    _objectReferences:
-    - {fileID: 11400000, guid: cdc4991753a21c442bf86846594f163e, type: 2}
 --- !u!1 &254200326
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,7 +638,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.8994308, y: 1}
+    m_SensorSize: {x: 2.1274037, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 1
@@ -1184,7 +1162,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.8994308, y: 1}
+    m_SensorSize: {x: 2.1274037, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2330,7 +2308,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.8994308, y: 1}
+    m_SensorSize: {x: 2.1274037, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2544,6 +2522,64 @@ Transform:
   m_Father: {fileID: 757680417}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1450565057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1450565058}
+  - component: {fileID: 1450565060}
+  - component: {fileID: 1450565059}
+  m_Layer: 0
+  m_Name: attackRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1450565058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450565057}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2056924235}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1450565059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450565057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c59bec306bdbce48b80cf9c91a3c920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCollider: {fileID: 0}
+--- !u!135 &1450565060
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450565057}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.8
+  m_Center: {x: 0, y: 0.9, z: 0.2}
 --- !u!1 &1497294419
 GameObject:
   m_ObjectHideFlags: 0
@@ -2580,7 +2616,7 @@ Transform:
   - {fileID: 657399780}
   - {fileID: 354981394}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1550106888
 GameObject:
@@ -2739,7 +2775,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1828829286
 GameObject:
@@ -3303,7 +3339,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.8994308, y: 1}
+    m_SensorSize: {x: 2.1274037, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -3327,6 +3363,11 @@ Transform:
   m_Father: {fileID: 254200328}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2056924235 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7837909504964331140, guid: bada0b3d479fa2c4f8a2bbc8edf2ec57, type: 3}
+  m_PrefabInstance: {fileID: 7837909503480274659}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2087962110
 GameObject:
   m_ObjectHideFlags: 3
@@ -3520,9 +3561,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: ActorBolt
       objectReference: {fileID: 0}
+    - target: {fileID: 3942132761351567207, guid: 3b10bb0d9ced5c6428528389709e13d0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942132761351567207, guid: 3b10bb0d9ced5c6428528389709e13d0, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 3942132761351793479, guid: 3b10bb0d9ced5c6428528389709e13d0, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3942132761351793479, guid: 3b10bb0d9ced5c6428528389709e13d0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3572,10 +3621,6 @@ PrefabInstance:
       propertyPath: rightHandObj
       value: 
       objectReference: {fileID: 667796918}
-    - target: {fileID: 6765761870169211738, guid: 3b10bb0d9ced5c6428528389709e13d0, type: 3}
-      propertyPath: _data._json
-      value: '{"declarations":{"collection":{"$content":[{"name":"Event_MakeDecision_To_MoveToAttackPoint","value":{"$content":"Event_MakeDecision_To_MoveToAttackPoint","$type":"System.String"},"$version":"A"},{"name":"Event_MakeDecision_To_Attack","value":{"$content":"Event_MakeDecision_To_Attack","$type":"System.String"},"$version":"A"},{"name":"Event_MoveToAttackPoint_To_MakeDecision","value":{"$content":"Event_MoveToAttackPoint_To_MakeDecision","$type":"System.String"},"$version":"A"},{"name":"Event_Attack_To_MakeDecision","value":{"$content":"Event_Attack_To_MakeDecision","$type":"System.String"},"$version":"A"},{"name":"Event_Exit_Combat","value":{"$content":"Event_Exit_Combat","$type":"System.String"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b10bb0d9ced5c6428528389709e13d0, type: 3}
 --- !u!1001 &7837909503480274659
@@ -3593,13 +3638,17 @@ PrefabInstance:
       propertyPath: rightHandObj
       value: 
       objectReference: {fileID: 667796918}
+    - target: {fileID: 2056924228, guid: bada0b3d479fa2c4f8a2bbc8edf2ec57, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7837909504963975844, guid: bada0b3d479fa2c4f8a2bbc8edf2ec57, type: 3}
       propertyPath: m_Name
       value: ActorBlue
       objectReference: {fileID: 0}
     - target: {fileID: 7837909504964331140, guid: bada0b3d479fa2c4f8a2bbc8edf2ec57, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7837909504964331140, guid: bada0b3d479fa2c4f8a2bbc8edf2ec57, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3641,5 +3690,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5016206556392132, guid: bada0b3d479fa2c4f8a2bbc8edf2ec57, type: 3}
+    - {fileID: 2056924228, guid: bada0b3d479fa2c4f8a2bbc8edf2ec57, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bada0b3d479fa2c4f8a2bbc8edf2ec57, type: 3}

@@ -28,6 +28,9 @@ public class AnimatorParameter : MonoBehaviour
     public const string IsFalling = "IsFalling";
     public const string ShowSword = "ShowSword";
 
+    public const string Damage01 = "Damage01";
+    public const string Damage02 = "Damage02";
+
     public const string LeftFootWeight = "LeftFootWeight";
     public const string RightFootWeight = "RightFootWeight";
 }

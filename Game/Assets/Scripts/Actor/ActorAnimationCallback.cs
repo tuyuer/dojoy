@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActorAnimationCallback : MonoBehaviour
+interface IActorAnimationCallback
 {
-    public virtual void OnAnimationEnd(string animationName) { }
-    public virtual void OnAttackComboBegin(string animationName) { }
-    public virtual void OnQuickTurnFinished(string animationName) { }
-    public virtual void OnLandGround() { }
-    public virtual void OnVaultEnd() { }
+    void OnAnimationEnd(string animationName);
+    void OnLandGround();
+    void OnVaultEnd();
 }
