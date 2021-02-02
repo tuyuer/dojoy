@@ -12,7 +12,7 @@ public class EnemyLocomotionAction : ActorAction
     public override void Update(float deltaTime)
     {
         float forwardSpeed = Mathf.Min(blackboard.actorSpeed.magnitude, 2.0f);
-        if (forwardSpeed < 0.1f)
+        if (forwardSpeed < 0.5f)
         {
             forwardSpeed = 0;
         }
