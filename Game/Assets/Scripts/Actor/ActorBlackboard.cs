@@ -8,6 +8,8 @@ public class ActorBlackboard : MonoBehaviour
     public CharacterController characterController;
     public Transform actor;
 
+    public AttackRange attackRange;
+
     public Transform swordSocket;
     public SwordEffectSocket sowrdEffectSocket;
 

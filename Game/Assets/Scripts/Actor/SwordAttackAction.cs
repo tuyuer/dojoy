@@ -112,6 +112,7 @@ public class SwordAttackAction : ActorAction
             blackboard.animator.SetBool(attackNames[i], i == nStep);
         }
         blackboard.sowrdEffectSocket.PlayEfect(nStep);
+        blackboard.attackRange.ActivateWithTime(0.6f);
     }
 
     private void ClearTriggers()

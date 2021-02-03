@@ -139,8 +139,10 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
         }
     }
 
-
-
+    public virtual void OnReceiveDamage()
+    {
+        //Debug.Log("OnReceiveDamage : " + gameObject.name);
+    }
 
     //IActorAnimationCallback implements
     public void OnAnimationEnd(string animationName)

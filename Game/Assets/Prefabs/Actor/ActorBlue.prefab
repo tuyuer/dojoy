@@ -78,6 +78,64 @@ MonoBehaviour:
   - {fileID: 1485466043327710, guid: 3e914ef784028124db1daf7002a87cc8, type: 3}
   - {fileID: 1044528419629608, guid: 3be98662c9e7ef5468cb9c4e11010dc7, type: 3}
   - {fileID: 1011157772751556, guid: ca63c6ac7458764498741e0306f78528, type: 3}
+--- !u!1 &1450565057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1450565058}
+  - component: {fileID: 1450565060}
+  - component: {fileID: 1450565059}
+  m_Layer: 0
+  m_Name: attackRange
+  m_TagString: AttackRangePlayer
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1450565058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450565057}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7837909504964331140}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1450565060
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450565057}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.8
+  m_Center: {x: 0, y: 0.9, z: 0.2}
+--- !u!114 &1450565059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450565057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c59bec306bdbce48b80cf9c91a3c920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCollider: {fileID: 0}
 --- !u!1 &5114213569714636727
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,6 +267,7 @@ Transform:
   - {fileID: 7837909504964331262}
   - {fileID: 5504077926628518802}
   - {fileID: 1098921736}
+  - {fileID: 1450565058}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -297,6 +356,7 @@ MonoBehaviour:
   animator: {fileID: 7837909504963943435}
   characterController: {fileID: 7837909504963943428}
   actor: {fileID: 7837909504964331140}
+  attackRange: {fileID: 1450565059}
   swordSocket: {fileID: 976003375}
   sowrdEffectSocket: {fileID: 863758429}
   showSword: 0

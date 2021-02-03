@@ -11,6 +11,8 @@ TagManager:
   - VaultObject
   - WayPoint
   - Enemy
+  - AttackRangePlayer
+  - AttackRangeEnemy
   layers:
   - Default
   - TransparentFX
