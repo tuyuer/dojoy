@@ -6,12 +6,12 @@ public class LandAction : ActorAction
 {
     public LandAction()
     {
-        actionType = actor_state.actor_state_land;
+        actionType = actor_action_state.actor_action_state_land;
     }
 
     public override void Update(float deltaTime)
     {
-        if (blackboard.actorState == actor_state.actor_state_land)
+        if (blackboard.actorState == actor_action_state.actor_action_state_land)
         {
             if (animator.IsInTransition(0))
             {
@@ -31,13 +31,13 @@ public class LandAction : ActorAction
 
     public override void OnEnter(ArrayList arrayParamList = null)
     {
-        blackboard.actorState = actor_state.actor_state_land;
+        blackboard.actorState = actor_action_state.actor_action_state_land;
         //animator
         animator.SetFloat(AnimatorParameter.ForwardSpeed, 0);
     }
 
     public override void OnExit()
     {
-        blackboard.actorState = actor_state.actor_state_locomotion;
+        blackboard.actorState = actor_action_state.actor_action_state_locomotion;
     }
 }

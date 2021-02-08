@@ -20,7 +20,7 @@ public class SwordAttackAction : ActorAction
 
     public SwordAttackAction()
     {
-        actionType = actor_state.actor_state_sword_attack;
+        actionType = actor_action_state.actor_action_state_sword_attack;
     }
 
     public override void Update(float deltaTime)
@@ -61,7 +61,7 @@ public class SwordAttackAction : ActorAction
     {
         if (CanTriggerAction())
         {
-            if (blackboard.actorState == actor_state.actor_state_sword_attack)
+            if (blackboard.actorState == actor_action_state.actor_action_state_sword_attack)
             {
                 AnimatorStateInfo animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
                 if (animatorStateInfo.normalizedTime > 0.3f)
@@ -73,7 +73,7 @@ public class SwordAttackAction : ActorAction
             else
             {
                 TriggerStep(attackStep);
-                blackboard.actorState = actor_state.actor_state_sword_attack;
+                blackboard.actorState = actor_action_state.actor_action_state_sword_attack;
                 autoTriggerNextStep = attackStep;
             }
         }
@@ -84,15 +84,15 @@ public class SwordAttackAction : ActorAction
         attackStep = 0;
         autoTriggerNextStep = -1;
         ClearTriggers();
-        blackboard.actorState = actor_state.actor_state_locomotion;
+        blackboard.actorState = actor_action_state.actor_action_state_locomotion;
         Debug.Log("swordAttackAction OnExit()");
     }
 
     public override bool CanTriggerAction()
     {
         if (blackboard.characterController.isGrounded &&
-            (blackboard.actorState == actor_state.actor_state_locomotion ||
-            blackboard.actorState == actor_state.actor_state_sword_attack))
+            (blackboard.actorState == actor_action_state.actor_action_state_locomotion ||
+            blackboard.actorState == actor_action_state.actor_action_state_sword_attack))
         {
             return true;
         }

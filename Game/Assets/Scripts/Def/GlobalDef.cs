@@ -5,6 +5,7 @@ public class GlobalDef
 {
     //Common Defines
     public const int INVALID_VALUE = -1;
+    public const float ZERO_VALUE = 0.0f;
 
     //3D World
     public const float WORLD_GRAVITY = 9.8f;

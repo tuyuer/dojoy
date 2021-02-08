@@ -6,7 +6,7 @@ public class LocomotionAction : ActorAction
 {
     public LocomotionAction()
     {
-        actionType = actor_state.actor_state_locomotion;
+        actionType = actor_action_state.actor_action_state_locomotion;
     }
 
     public override void Update(float deltaTime)

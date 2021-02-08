@@ -6,7 +6,7 @@ public class DodgeAction : ActorAction
 {
     public DodgeAction()
     {
-        actionType = actor_state.actor_state_dodge;
+        actionType = actor_action_state.actor_action_state_dodge;
     }
 
     public override void Update(float deltaTime)
@@ -30,19 +30,19 @@ public class DodgeAction : ActorAction
         if (CanTriggerAction())
         {
             blackboard.animator.SetTrigger(AnimatorParameter.Dodge);
-            blackboard.actorState = actor_state.actor_state_dodge;
+            blackboard.actorState = actor_action_state.actor_action_state_dodge;
         }
     }
 
     public override void OnExit()
     {
-        blackboard.actorState = actor_state.actor_state_locomotion;
+        blackboard.actorState = actor_action_state.actor_action_state_locomotion;
     }
 
     public override bool CanTriggerAction()
     {
         if (blackboard.characterController.isGrounded &&
-            blackboard.actorState == actor_state.actor_state_locomotion)
+            blackboard.actorState == actor_action_state.actor_action_state_locomotion)
         {
             return true;
         }

@@ -9,7 +9,7 @@ public class ClimbAction : ActorAction
 
     public ClimbAction()
     {
-        actionType = actor_state.actor_state_climb;
+        actionType = actor_action_state.actor_action_state_climb;
     }
 
     public override void Update(float deltaTime)

@@ -7,7 +7,7 @@ public class VaultAction : ActorAction
     private Vector3 matchPoint;
     public VaultAction()
     {
-        actionType = actor_state.actor_state_vault;
+        actionType = actor_action_state.actor_action_state_vault;
     }
 
     public override void Update(float deltaTime)
@@ -26,7 +26,7 @@ public class VaultAction : ActorAction
         {
             matchPoint = (Vector3)arrayParamList[0];
             animator.SetTrigger(AnimatorParameter.Vault);
-            blackboard.actorState = actor_state.actor_state_vault;
+            blackboard.actorState = actor_action_state.actor_action_state_vault;
         }
     }
 
@@ -34,7 +34,7 @@ public class VaultAction : ActorAction
     {
         blackboard.animator.applyRootMotion = false;
         blackboard.characterController.enabled = true;
-        blackboard.actorState = actor_state.actor_state_jump;
+        blackboard.actorState = actor_action_state.actor_action_state_jump;
     }
 
     void ProcessMatchTarget()

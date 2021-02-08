@@ -6,17 +6,19 @@ public class EnemyLocomotionAction : ActorAction
 {
     public EnemyLocomotionAction()
     {
-        actionType = actor_state.actor_state_locomotion;
+        actionType = actor_action_state.actor_action_state_locomotion;
     }
 
     public override void Update(float deltaTime)
     {
-        float forwardSpeed = Mathf.Min(blackboard.actorSpeed.magnitude, 2.0f);
-        if (forwardSpeed < 0.5f)
+        float forwardSpeed = 0;
+
+        //set character forward direction
+        forwardSpeed = blackboard.navMeshAgent.velocity.magnitude;
+        if (forwardSpeed > GlobalDef.ACTOR_MAX_FOWARD_SPEED)
         {
-            forwardSpeed = 0;
+            forwardSpeed = GlobalDef.ACTOR_MAX_FOWARD_SPEED;
         }
-        //animator
         animator.SetFloat(AnimatorParameter.ForwardSpeed, forwardSpeed);
     }
 }

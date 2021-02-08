@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Brain : MonoBehaviour, IActorAnimationCallback
 {
     protected ActorBlackboard blackboard;
-    protected Dictionary<actor_state, ActorAction> actionList = new Dictionary<actor_state, ActorAction>();
+    protected Dictionary<actor_action_state, ActorAction> actionList = new Dictionary<actor_action_state, ActorAction>();
     
     // Start is called before the first frame update
     public void Awake()
@@ -16,16 +17,17 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
             blackboard.swordSocket.gameObject.SetActive(false);
         }
 
-        actionList.Add(actor_state.actor_state_locomotion, new LocomotionAction());
-        actionList.Add(actor_state.actor_state_climb, new ClimbAction());
-        actionList.Add(actor_state.actor_state_jump, new JumpAction());
-        actionList.Add(actor_state.actor_state_land, new LandAction());
-        actionList.Add(actor_state.actor_state_vault, new VaultAction());
-        actionList.Add(actor_state.actor_state_dodge, new DodgeAction());
-        actionList.Add(actor_state.actor_state_punch, new PunchAction());
-        actionList.Add(actor_state.actor_state_sword_attack, new SwordAttackAction());
+        actionList.Add(actor_action_state.actor_action_state_locomotion, new LocomotionAction());
+        actionList.Add(actor_action_state.actor_action_state_climb, new ClimbAction());
+        actionList.Add(actor_action_state.actor_action_state_jump, new JumpAction());
+        actionList.Add(actor_action_state.actor_action_state_land, new LandAction());
+        actionList.Add(actor_action_state.actor_action_state_vault, new VaultAction());
+        actionList.Add(actor_action_state.actor_action_state_dodge, new DodgeAction());
+        actionList.Add(actor_action_state.actor_action_state_punch, new PunchAction());
+        actionList.Add(actor_action_state.actor_action_state_sword_attack, new SwordAttackAction());
+        actionList.Add(actor_action_state.actor_action_state_damage, new DamageAction());
 
-        foreach (KeyValuePair<actor_state, ActorAction> kv in actionList)
+        foreach (KeyValuePair<actor_action_state, ActorAction> kv in actionList)
         {
             ActorAction actorAction = kv.Value;
             actorAction.AttachBlackboard(blackboard);
@@ -40,11 +42,11 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
         //apply gravity
         actorSpeed.y -= GlobalDef.WORLD_GRAVITY * Time.deltaTime;
 
-        //set actorSpeed to Blackboard
+        //set actorSpeed to blackboard
         blackboard.actorSpeed = actorSpeed;
 
         //update active action in actionList
-        foreach (KeyValuePair<actor_state, ActorAction> kv in actionList)
+        foreach (KeyValuePair<actor_action_state, ActorAction> kv in actionList)
         {
             ActorAction actorAction = kv.Value;
             bool isActionEnabled = actorAction.ActionType == blackboard.actorState;
@@ -63,29 +65,47 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
         {
             ArrayList arrayList = new ArrayList();
             arrayList.Add(matchPoint);
-            actionList[actor_state.actor_state_vault].OnEnter(arrayList);
+            actionList[actor_action_state.actor_action_state_vault].OnEnter(arrayList);
         }
         else
         {
-            actionList[actor_state.actor_state_jump].OnEnter();
+            actionList[actor_action_state.actor_action_state_jump].OnEnter();
         }
     }
 
     public void OnDodge()
     {
-        actionList[actor_state.actor_state_dodge].OnEnter();
+        actionList[actor_action_state.actor_action_state_dodge].OnEnter();
+    }
+
+    public void OnDamage()
+    {
+        actionList[actor_action_state.actor_action_state_damage].OnEnter();
     }
 
     public void OnAttackO()
     {
         if (blackboard.showSword)
         {
-            actionList[actor_state.actor_state_sword_attack].OnEnter();
+            actionList[actor_action_state.actor_action_state_sword_attack].OnEnter();
         }
         else
         {
-            actionList[actor_state.actor_state_punch].OnEnter();
+            actionList[actor_action_state.actor_action_state_punch].OnEnter();
         }
+    }
+
+    public void StartNavigation(Vector3 target)
+    {
+        blackboard.navMeshAgent.enabled = true;
+        blackboard.navMeshAgent.SetDestination(target);
+        blackboard.navDestination = target;
+    }
+
+    public void StopNavigation()
+    {
+        blackboard.navMeshAgent.enabled = false;
+        blackboard.navDestination = Vector3.zero;
     }
 
     public bool CheckVaultable(out Vector3 matchPoint)
@@ -150,7 +170,7 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
         Debug.Log(animationName + " End");
         if (animationName.Equals(AnimatorParameter.Dodge))
         {
-            actionList[actor_state.actor_state_dodge].OnExit();
+            actionList[actor_action_state.actor_action_state_dodge].OnExit();
         }
     }
 
@@ -158,12 +178,12 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
     public void OnLandGround()
     {
         Debug.Log("OnLandGround");
-        actionList[actor_state.actor_state_land].OnEnter();
+        actionList[actor_action_state.actor_action_state_land].OnEnter();
     }
 
     public void OnVaultEnd()
     {
         Debug.Log("OnVaultEnd");
-        actionList[actor_state.actor_state_vault].OnExit();
+        actionList[actor_action_state.actor_action_state_vault].OnExit();
     }
 }

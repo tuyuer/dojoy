@@ -7,7 +7,7 @@ public class JumpAction : ActorAction
     private float jumpSpeed = 0;
     public JumpAction()
     {
-        actionType = actor_state.actor_state_jump;
+        actionType = actor_action_state.actor_action_state_jump;
     }
 
     public override void Update(float deltaTime)
@@ -55,7 +55,7 @@ public class JumpAction : ActorAction
 
         jumpSpeed = GlobalDef.ACTOR_JUMP_SPEED;
         animator.SetTrigger(AnimatorParameter.Jump);
-        blackboard.actorState = actor_state.actor_state_jump;
+        blackboard.actorState = actor_action_state.actor_action_state_jump;
     }
 
     public override void OnExit()
@@ -64,9 +64,9 @@ public class JumpAction : ActorAction
 
     private bool IsInJumpableState()
     {
-        List<actor_state> jumpableState = new List<actor_state>
+        List<actor_action_state> jumpableState = new List<actor_action_state>
         {
-            actor_state.actor_state_locomotion
+            actor_action_state.actor_action_state_locomotion
         };
 
         if (jumpableState.Contains(blackboard.actorState))

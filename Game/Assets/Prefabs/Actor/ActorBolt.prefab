@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &83463581
 Transform:
   m_ObjectHideFlags: 0
@@ -41,7 +41,7 @@ SphereCollider:
   m_GameObject: {fileID: 83463578}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 1.8
   m_Center: {x: 0, y: 0.9, z: 0.2}
@@ -52,7 +52,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83463578}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c59bec306bdbce48b80cf9c91a3c920, type: 3}
   m_Name: 
@@ -1726,15 +1726,13 @@ GameObject:
   - component: {fileID: 3942132761351664071}
   - component: {fileID: 3942132761351664072}
   - component: {fileID: 6516882343533455755}
-  - component: {fileID: 6516882343533455753}
   - component: {fileID: 6516882343533455752}
-  - component: {fileID: 6765761870169211737}
-  - component: {fileID: 6765761870169211738}
   - component: {fileID: 6765761870169211740}
   - component: {fileID: 1014027843}
   - component: {fileID: 1335890694}
-  - component: {fileID: 229801847}
   - component: {fileID: 6355196595712380262}
+  - component: {fileID: 7412220014311440152}
+  - component: {fileID: 7733125103195239489}
   m_Layer: 0
   m_Name: ActorBolt
   m_TagString: Enemy
@@ -1819,28 +1817,6 @@ MonoBehaviour:
   DistanceToGround: 0.12
   lookObj: {fileID: 0}
   rightHandObj: {fileID: 0}
---- !u!114 &6516882343533455753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3942132761351567207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f7a00bbecaf8a4489a0a6e52bb1cd63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 3942132761351664072}
-  characterController: {fileID: 3942132761351664071}
-  actor: {fileID: 3942132761351793479}
-  attackRange: {fileID: 83463579}
-  swordSocket: {fileID: 6516882344902626540}
-  sowrdEffectSocket: {fileID: 6516882344781596062}
-  showSword: 0
-  actorState: 0
-  moveDir: {x: 0, y: 0, z: 0}
-  actorSpeed: {x: 0, y: 0, z: 0}
 --- !u!114 &6516882343533455752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1856,37 +1832,6 @@ MonoBehaviour:
   gizmoSize: 4.32
   sphereScale: 0.1
   spherePoint: 1
---- !u!114 &6765761870169211737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3942132761351567207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1999370065, guid: dcd2196c4e9166f499793f2007fcda35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
-    _objectReferences:
-    - {fileID: 11400000, guid: 4d2697430a14fc44a8de71cda0f0b5c9, type: 2}
---- !u!114 &6765761870169211738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3942132761351567207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1465209106, guid: c8d0ad23af520fe46aabe2b1fecf6462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"collection":{"$content":[{"name":"Event_MakeDecision_To_MoveToAttackPoint","value":{"$content":"Event_MakeDecision_To_MoveToAttackPoint","$type":"System.String"},"$version":"A"},{"name":"Event_MakeDecision_To_Attack","value":{"$content":"Event_MakeDecision_To_Attack","$type":"System.String"},"$version":"A"},{"name":"Event_MoveToAttackPoint_To_MakeDecision","value":{"$content":"Event_MoveToAttackPoint_To_MakeDecision","$type":"System.String"},"$version":"A"},{"name":"Event_Attack_To_MakeDecision","value":{"$content":"Event_Attack_To_MakeDecision","$type":"System.String"},"$version":"A"},{"name":"Event_Exit_Combat","value":{"$content":"Event_Exit_Combat","$type":"System.String"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
 --- !u!195 &6765761870169211740
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1946,23 +1891,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &229801847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3942132761351567207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -57143145, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"ActorBolt","summary":null,"pan":{"x":23.5,"y":-50.0},"zoom":1.0,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":-204.0,"y":-144.0},"guid":"e946718e-41e7-4d4d-8458-0b79a1d56d6f","$version":"A","$type":"Bolt.Start","$id":"10"},{"coroutine":false,"defaultValues":{},"position":{"x":-204.0,"y":60.0},"guid":"0630e69a-0129-4c2f-9930-56f5661f1174","$version":"A","$type":"Bolt.Update"},{"nest":{"source":"Macro","macro":0,"embed":null},"defaultValues":{},"position":{"x":14.0,"y":-145.0},"guid":"7b7aa24b-e73e-4575-98f1-28704af423f1","$version":"A","$type":"Bolt.SuperUnit","$id":"14"},{"type":"System.Boolean","value":{"$content":true,"$type":"System.Boolean"},"defaultValues":{},"position":{"x":-96.0,"y":-47.0},"guid":"2d18e851-fa38-43c8-94af-a5259d4c7ba2","$version":"A","$type":"Bolt.Literal","$id":"17"},{"sourceUnit":{"$ref":"10"},"sourceKey":"trigger","destinationUnit":{"$ref":"14"},"destinationKey":"Sword
-      Show","guid":"14c487c9-04d9-49fd-9d27-f9a1d1bccc54","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"17"},"sourceKey":"output","destinationUnit":{"$ref":"14"},"destinationKey":"showSword","guid":"80b6b6df-2b9d-4cda-a584-7bc80427c0a6","$type":"Bolt.ValueConnection"}],"$version":"A"}}}'
-    _objectReferences:
-    - {fileID: 11400000, guid: cdc4991753a21c442bf86846594f163e, type: 2}
 --- !u!114 &6355196595712380262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1973,6 +1901,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e5fa4a8f1545ca4fbd07e6fd746136f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7412220014311440152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3942132761351567207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f7a00bbecaf8a4489a0a6e52bb1cd63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3942132761351664072}
+  characterController: {fileID: 3942132761351664071}
+  actor: {fileID: 3942132761351793479}
+  actorSense: {fileID: 1014027843}
+  attackRange: {fileID: 83463579}
+  swordSocket: {fileID: 6516882344902626540}
+  sowrdEffectSocket: {fileID: 6516882344781596062}
+  navMeshAgent: {fileID: 6765761870169211740}
+  showSword: 0
+  actorState: 0
+  moveDir: {x: 0, y: 0, z: 0}
+  actorSpeed: {x: 0, y: 0, z: 0}
+  navDestination: {x: 0, y: 0, z: 0}
+--- !u!114 &7733125103195239489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3942132761351567207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e59d46f434a5c954e91aa233bc3913c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3942132761351567209

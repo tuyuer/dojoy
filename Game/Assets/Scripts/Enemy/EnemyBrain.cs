@@ -5,38 +5,21 @@ using UnityEngine.AI;
 
 public class EnemyBrain : Brain
 {
-    NavMeshAgent navMeshAgent;
     // Start is called before the first frame update
     void Awake()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        blackboard = GetComponent<ActorBlackboard>();
-        if (blackboard.swordSocket != null)
-        {
-            blackboard.swordSocket.gameObject.SetActive(true);
-        }
+        base.Awake();
 
-        actionList.Add(actor_state.actor_state_locomotion, new EnemyLocomotionAction());
-        actionList.Add(actor_state.actor_state_climb, new ClimbAction());
-        actionList.Add(actor_state.actor_state_jump, new JumpAction());
-        actionList.Add(actor_state.actor_state_land, new LandAction());
-        actionList.Add(actor_state.actor_state_vault, new VaultAction());
-        actionList.Add(actor_state.actor_state_dodge, new DodgeAction());
-        actionList.Add(actor_state.actor_state_punch, new PunchAction());
-        actionList.Add(actor_state.actor_state_sword_attack, new SwordAttackAction());
-
-        foreach (KeyValuePair<actor_state, ActorAction> kv in actionList)
-        {
-            ActorAction actorAction = kv.Value;
-            actorAction.AttachBlackboard(blackboard);
-        }
+        //replace LocomotionAction to EnemyLocomotionAction
+        actionList[actor_action_state.actor_action_state_locomotion] = new EnemyLocomotionAction();
+        actionList[actor_action_state.actor_action_state_locomotion].AttachBlackboard(blackboard);
     }
 
     void Update()
     {
         //input direction
         blackboard.moveDir = transform.forward;
-        Vector3 actorSpeed = navMeshAgent.velocity;
+        Vector3 actorSpeed = blackboard.navMeshAgent.velocity;
 
         //apply gravity
         actorSpeed.y -= GlobalDef.WORLD_GRAVITY * Time.deltaTime;
@@ -45,7 +28,7 @@ public class EnemyBrain : Brain
         blackboard.actorSpeed = actorSpeed;
 
         //update active action in actionList
-        foreach (KeyValuePair<actor_state, ActorAction> kv in actionList)
+        foreach (KeyValuePair<actor_action_state, ActorAction> kv in actionList)
         {
             ActorAction actorAction = kv.Value;
             bool isActionEnabled = actorAction.ActionType == blackboard.actorState;

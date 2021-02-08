@@ -6,15 +6,15 @@ public class WayPointManager : MonoBehaviour
 {
     public GameObject[] patrolPoint;
 
-    // Start is called before the first frame update
-    void Start()
+    public Vector3 RandomPatrolPoint()
     {
-        
-    }
+        int nRandomIndex = Random.Range(0, patrolPoint.Length);
+        if (patrolPoint.Length > 0 &&
+            nRandomIndex >= 0)
+        {
+            return patrolPoint[nRandomIndex].transform.position;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        return Vector3.zero;
     }
 }

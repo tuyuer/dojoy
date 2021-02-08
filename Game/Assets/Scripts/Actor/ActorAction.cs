@@ -13,7 +13,7 @@ public class ActorAction
 
     protected bool actionEnabled = false;
 
-    protected actor_state actionType = actor_state.actor_state_locomotion;
+    protected actor_action_state actionType = actor_action_state.actor_action_state_locomotion;
 
     public virtual void Update(float deltaTime) { }
     public virtual void OnEnter(ArrayList arrayParamList = null) { }
@@ -25,7 +25,7 @@ public class ActorAction
 
     }
 
-    public actor_state ActionType
+    public actor_action_state ActionType
     {
         get { return actionType; }
     }

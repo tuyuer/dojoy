@@ -19,7 +19,7 @@ public class PunchAction : ActorAction
 
     public PunchAction()
     {
-        actionType = actor_state.actor_state_punch;
+        actionType = actor_action_state.actor_action_state_punch;
     }
 
     public override void Update(float deltaTime)
@@ -61,7 +61,7 @@ public class PunchAction : ActorAction
     {
         if (CanTriggerAction())
         {
-            if (blackboard.actorState == actor_state.actor_state_punch)
+            if (blackboard.actorState == actor_action_state.actor_action_state_punch)
             {
                 AnimatorStateInfo animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
                 if (animatorStateInfo.normalizedTime > 0.3f)
@@ -73,7 +73,7 @@ public class PunchAction : ActorAction
             else
             {
                 TriggerStep(attackStep);
-                blackboard.actorState = actor_state.actor_state_punch;
+                blackboard.actorState = actor_action_state.actor_action_state_punch;
                 autoTriggerNextStep = attackStep;
             }
         }
@@ -84,14 +84,14 @@ public class PunchAction : ActorAction
         attackStep = 0;
         autoTriggerNextStep = -1;
         ClearTriggers();
-        blackboard.actorState = actor_state.actor_state_locomotion;
+        blackboard.actorState = actor_action_state.actor_action_state_locomotion;
     }
 
     public override bool CanTriggerAction()
     {
         if (blackboard.characterController.isGrounded &&
-            (blackboard.actorState == actor_state.actor_state_locomotion ||
-             blackboard.actorState == actor_state.actor_state_punch))
+            (blackboard.actorState == actor_action_state.actor_action_state_locomotion ||
+             blackboard.actorState == actor_action_state.actor_action_state_punch))
         {
             return true;
         }
