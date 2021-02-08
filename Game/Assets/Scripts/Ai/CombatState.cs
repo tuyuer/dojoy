@@ -25,9 +25,14 @@ public class CombatState : ActorFSMState
         //target in combat range
         if (actorSense.IsTargetInAttackRange())
         {
-            blackboard.navMeshAgent.isStopped = true;
+            if (!blackboard.navMeshAgent.isStopped)
+            {
+                blackboard.navMeshAgent.isStopped = true;
+                fWaitTime = Random.Range(0.5f, 2.0f);
+                return;
+            }
             blackboard.actorBrain.OnAttackO();
-            fWaitTime = 1.0f;
+            fWaitTime = 0.6f;
             nAttackStep++;
         }
         else if (actorSense.IsTargetInCombatRange())

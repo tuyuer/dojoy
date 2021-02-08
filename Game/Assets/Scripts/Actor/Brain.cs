@@ -60,11 +60,13 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
 
     public bool IsGrounded()
     {
-        if (blackboard.characterController.isGrounded)
+        int nWalkableLayer = LayerMask.NameToLayer("Walkable");
+        RaycastHit hitInfo;
+        if (Physics.Raycast(new Ray(transform.position + Vector3.up * 0.15f, Vector3.down), out hitInfo, 0.3f, 1 << nWalkableLayer))
         {
             return true;
         }
-        return Physics.Raycast(transform.position, Vector3.down, 0.1f);
+        return false;
     }
 
     public void OnJump()

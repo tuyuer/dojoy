@@ -20,6 +20,7 @@ public class JumpAction : ActorAction
         }
         if (blackboard.actorBrain.IsGrounded())
         {
+            Debug.Log("is grounded : " + blackboard.actorBrain.IsGrounded());
             isFalling = false;
         }
         animator.SetBool(AnimatorParameter.IsFalling, isFalling);
