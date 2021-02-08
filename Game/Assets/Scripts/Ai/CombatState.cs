@@ -22,6 +22,7 @@ public class CombatState : ActorFSMState
             blackboard.navMeshAgent.isStopped = true;
             OnExit();
         }
+        Debug.Log("Update:CombatState");
     }
 
     public override void OnEnter(ArrayList arrayParamList = null)

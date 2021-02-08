@@ -40,6 +40,7 @@ public class PatrolState : ActorFSMState
                 OnExit();
             }
         }
+        Debug.Log("Update:PatrolState");
     }
 
     public override void OnEnter(ArrayList arrayParamList = null)

@@ -92,7 +92,7 @@ public class ActorFSMMachine : MonoBehaviour
 
     bool TryTriggerState(actor_fsm_state fsmState)
     {
-        stateList[actor_fsm_state.actor_fsm_state_patrol].OnEnter();
+        stateList[fsmState].OnEnter();
         return false;
     }
 }
