@@ -357,14 +357,17 @@ MonoBehaviour:
   animator: {fileID: 7837909504963943435}
   characterController: {fileID: 7837909504963943428}
   actor: {fileID: 7837909504964331140}
+  actorBrain: {fileID: 1771078729}
+  actorSense: {fileID: 0}
   attackRange: {fileID: 1450565059}
   swordSocket: {fileID: 976003375}
   sowrdEffectSocket: {fileID: 863758429}
+  navMeshAgent: {fileID: 0}
   showSword: 0
   actorState: 0
   moveDir: {x: 0, y: 0, z: 0}
   actorSpeed: {x: 0, y: 0, z: 0}
-  moveDestination: {x: 0, y: 0, z: 0}
+  navDestination: {x: 0, y: 0, z: 0}
 --- !u!114 &1771078731
 MonoBehaviour:
   m_ObjectHideFlags: 0

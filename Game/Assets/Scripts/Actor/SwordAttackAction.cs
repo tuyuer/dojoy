@@ -90,7 +90,7 @@ public class SwordAttackAction : ActorAction
 
     public override bool CanTriggerAction()
     {
-        if (blackboard.characterController.isGrounded &&
+        if (blackboard.actorBrain.IsGrounded() &&
             (blackboard.actorState == actor_action_state.actor_action_state_locomotion ||
             blackboard.actorState == actor_action_state.actor_action_state_sword_attack))
         {

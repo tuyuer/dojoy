@@ -8,6 +8,7 @@ public class ActorBlackboard : MonoBehaviour
     public Animator animator;
     public CharacterController characterController;
     public Transform actor;
+    public Brain actorBrain;
 
     public ActorSense actorSense;
     public AttackRange attackRange;

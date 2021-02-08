@@ -58,6 +58,15 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
         }
     }
 
+    public bool IsGrounded()
+    {
+        if (blackboard.characterController.isGrounded)
+        {
+            return true;
+        }
+        return Physics.Raycast(transform.position, Vector3.down, 0.1f);
+    }
+
     public void OnJump()
     {
         Vector3 matchPoint;

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CombatState : ActorFSMState
 {
+    private const int MAX_COMBO_STEP = 3;
+    private int nAttackStep;
+
+    private float fWaitTime = 0.0f;
+
     public CombatState()
     {
         fsmState = actor_fsm_state.actor_fsm_state_combat;
@@ -11,8 +16,21 @@ public class CombatState : ActorFSMState
 
     public override void Update(float deltaTime)
     {
+        if (fWaitTime > 0)
+        {
+            fWaitTime -= deltaTime;
+            return;
+        }
+
         //target in combat range
-        if (actorSense.IsTargetInCombatRange())
+        if (actorSense.IsTargetInAttackRange())
+        {
+            blackboard.navMeshAgent.isStopped = true;
+            blackboard.actorBrain.OnAttackO();
+            fWaitTime = 1.0f;
+            nAttackStep++;
+        }
+        else if (actorSense.IsTargetInCombatRange())
         {
             blackboard.navMeshAgent.isStopped = false;
             blackboard.navMeshAgent.SetDestination(blackboard.actorSense.Target.transform.position);
@@ -33,5 +51,10 @@ public class CombatState : ActorFSMState
     public override void OnExit()
     {
         base.OnExit();
+    }
+
+    void MakingDecision()
+    {
+
     }
 }

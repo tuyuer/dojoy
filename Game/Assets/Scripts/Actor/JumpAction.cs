@@ -18,7 +18,7 @@ public class JumpAction : ActorAction
         {
             isFalling = true;
         }
-        if (characterController.isGrounded)
+        if (blackboard.actorBrain.IsGrounded())
         {
             isFalling = false;
         }
