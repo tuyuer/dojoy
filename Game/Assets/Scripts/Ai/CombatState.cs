@@ -34,8 +34,10 @@ public class CombatState : ActorFSMState
             blackboard.actorBrain.OnAttackO();
             fWaitTime = 0.2f;
             nAttackStep++;
+
             if (nAttackStep % 3 == 0)
             {
+                nAttackStep = 0;
                 fWaitTime = 2.0f;
             }
         }
