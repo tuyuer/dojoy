@@ -32,6 +32,9 @@ public class PunchAction : ActorAction
 
         AnimatorStateInfo stateInfo = blackboard.animator.GetCurrentAnimatorStateInfo(0);
         float normalizedTime = stateInfo.normalizedTime;
+        Debug.Log("normalizedTime = " + normalizedTime);
+        Debug.Log("attackStep = " + attackStep);
+        Debug.Log("autoTriggerNextStep = " + autoTriggerNextStep);
         if (autoTriggerNextStep > attackStep) //only combo big attackStep
         {
             if (stateInfo.IsName(attackNames[attackStep]))
@@ -46,7 +49,6 @@ public class PunchAction : ActorAction
         }
         else
         {
-            Debug.Log("normalized time = " + normalizedTime);
             if (stateInfo.IsName(attackNames[attackStep]))
             {
                 if (normalizedTime > animationFinishNormalizedTime)
@@ -85,6 +87,7 @@ public class PunchAction : ActorAction
         autoTriggerNextStep = -1;
         ClearTriggers();
         blackboard.actorState = actor_action_state.actor_action_state_locomotion;
+        Debug.Log("PunchAction OnExit");
     }
 
     public override bool CanTriggerAction()

@@ -32,8 +32,12 @@ public class CombatState : ActorFSMState
                 return;
             }
             blackboard.actorBrain.OnAttackO();
-            fWaitTime = 0.6f;
+            fWaitTime = 0.2f;
             nAttackStep++;
+            if (nAttackStep % 3 == 0)
+            {
+                fWaitTime = 2.0f;
+            }
         }
         else if (actorSense.IsTargetInCombatRange())
         {
@@ -45,7 +49,6 @@ public class CombatState : ActorFSMState
             blackboard.navMeshAgent.isStopped = true;
             OnExit();
         }
-        Debug.Log("Update:CombatState");
     }
 
     public override void OnEnter(ArrayList arrayParamList = null)

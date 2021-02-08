@@ -23,7 +23,6 @@ public class ChasingState : ActorFSMState
             blackboard.navMeshAgent.isStopped = true;
             OnExit();
         }
-        Debug.Log("Update:ChasingState");
     }
 
     public override void OnEnter(ArrayList arrayParamList = null)
