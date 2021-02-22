@@ -19,4 +19,5 @@ public class GlobalDef
     public const float ACTOR_JUMP_SPEED_ACCEL = 18f;
     public const float ACTOR_FOWARD_WALK_SPEED = 0.3f;
     public const float ACTOR_QUICK_TURN_SPEED = ACTOR_MAX_FOWARD_SPEED / 2;
+
 }

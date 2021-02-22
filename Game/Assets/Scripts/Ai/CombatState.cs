@@ -31,6 +31,14 @@ public class CombatState : ActorFSMState
                 fWaitTime = Random.Range(0.5f, 2.0f);
                 return;
             }
+
+            if (blackboard.actorState != actor_action_state.actor_action_state_turn_toward &&
+                !actorSense.IsFacingTarget())
+            {
+                blackboard.actorBrain.TurnTwardsTarget();
+                return;
+            }
+
             blackboard.actorBrain.OnAttackO();
             fWaitTime = 0.2f;
             nAttackStep++;
@@ -61,10 +69,5 @@ public class CombatState : ActorFSMState
     public override void OnExit()
     {
         base.OnExit();
-    }
-
-    void MakingDecision()
-    {
-
     }
 }

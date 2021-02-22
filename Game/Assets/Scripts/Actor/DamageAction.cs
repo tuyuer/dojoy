@@ -26,7 +26,19 @@ public class DamageAction : ActorAction
         //{
         //    return;
         //}
-
+        List<string> attackNames = new List<string>
+        {
+            "ActorPunch1",
+            "ActorPunch2",
+            "ActorPunch3",
+            "SwordAttack1",
+            "SwordAttack2",
+            "SwordAttack3",
+        };
+        foreach (string attackName in attackNames)
+        {
+            blackboard.animator.SetBool(attackName, false);
+        }
         animator.SetTrigger(AnimatorParameter.Damage01);
         blackboard.actorState = actor_action_state.actor_action_state_damage;
     }

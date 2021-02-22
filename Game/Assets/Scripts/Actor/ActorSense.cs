@@ -8,7 +8,7 @@ public class ActorSense : MonoBehaviour
     public int eyeDistance;
     public float alertRange;
     public float combatRange;
-    public float attackRange = 1.3f;
+    public float attackRange = 1.5f;
 
     protected GameObject target = null;
 
@@ -86,6 +86,14 @@ public class ActorSense : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public bool IsFacingTarget()
+    {
+        Vector3 toVec = target.transform.position - transform.position;
+        Vector3 fromVec = transform.forward;
+        float angleOffset = Vector3.Angle(fromVec, toVec);
+        return angleOffset < 10;
     }
 
     public Vector3 OffsetToTarget()

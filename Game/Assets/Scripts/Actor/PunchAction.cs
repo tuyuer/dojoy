@@ -32,9 +32,9 @@ public class PunchAction : ActorAction
 
         AnimatorStateInfo stateInfo = blackboard.animator.GetCurrentAnimatorStateInfo(0);
         float normalizedTime = stateInfo.normalizedTime;
-        Debug.Log("normalizedTime = " + normalizedTime);
-        Debug.Log("attackStep = " + attackStep);
-        Debug.Log("autoTriggerNextStep = " + autoTriggerNextStep);
+        //Debug.Log("normalizedTime = " + normalizedTime);
+        //Debug.Log("attackStep = " + attackStep);
+        //Debug.Log("autoTriggerNextStep = " + autoTriggerNextStep);
         if (autoTriggerNextStep > attackStep) //only combo big attackStep
         {
             if (stateInfo.IsName(attackNames[attackStep]))

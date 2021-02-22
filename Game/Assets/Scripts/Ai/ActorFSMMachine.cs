@@ -90,9 +90,92 @@ public class ActorFSMMachine : MonoBehaviour
         return bHasRunningState;
     }
 
-    bool TryTriggerState(actor_fsm_state fsmState)
+    ActorFSMState GetRunningState()
     {
-        stateList[fsmState].OnEnter();
-        return false;
+        foreach (KeyValuePair<actor_fsm_state, ActorFSMState> kv in stateList)
+        {
+            ActorFSMState actorFsmState = kv.Value;
+            if (actorFsmState.IsRunning())
+            {
+                return actorFsmState;
+            }
+        }
+        return null;
+    }
+
+    public void TryTriggerState(actor_fsm_state fsmState)
+    {
+        switch (fsmState)
+        {
+            case actor_fsm_state.actor_fsm_state_patrol:
+                TryTriggerPatrolState();
+                break;
+            case actor_fsm_state.actor_fsm_state_chasing:
+                TryTriggerChasingState();
+                break;
+            case actor_fsm_state.actor_fsm_state_combat:
+                TryTriggerCombatState();
+                break;
+            case actor_fsm_state.actor_fsm_state_damage:
+                TryTriggerDamageState();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void TryTriggerPatrolState()
+    {
+        if (!actorSense.IsTargetInAlertRange() &&
+            !actorSense.IsTargetInsight())
+        {
+            ActorFSMState runningState = GetRunningState();
+            if (runningState != null &&
+                runningState.FsmState != actor_fsm_state.actor_fsm_state_patrol)
+            {
+                runningState.OnExit();
+            }
+            stateList[actor_fsm_state.actor_fsm_state_patrol].OnEnter();
+        }
+    }
+
+    void TryTriggerChasingState()
+    {
+        if (actorSense.IsTargetInAlertRange() ||
+            actorSense.IsTargetInsight())
+        {
+            ActorFSMState runningState = GetRunningState();
+            if (runningState != null &&
+                runningState.FsmState != actor_fsm_state.actor_fsm_state_chasing)
+            {
+                runningState.OnExit();
+            }
+            stateList[actor_fsm_state.actor_fsm_state_chasing].OnEnter();
+        }
+    }
+
+    void TryTriggerCombatState()
+    {
+        if (actorSense.IsTargetInCombatRange())
+        {
+            ActorFSMState runningState = GetRunningState();
+            if (runningState != null &&
+                runningState.FsmState != actor_fsm_state.actor_fsm_state_combat)
+            {
+                runningState.OnExit();
+            }
+            stateList[actor_fsm_state.actor_fsm_state_combat].OnEnter();
+        }
+    }
+
+    void TryTriggerDamageState()
+    {
+        ActorFSMState runningState = GetRunningState();
+        if (runningState != null &&
+            runningState.FsmState != actor_fsm_state.actor_fsm_state_damage)
+        {
+            runningState.OnExit();
+        }
+        stateList[actor_fsm_state.actor_fsm_state_damage].OnEnter();
     }
 }

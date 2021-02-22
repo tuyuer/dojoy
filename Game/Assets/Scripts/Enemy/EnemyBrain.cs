@@ -39,4 +39,17 @@ public class EnemyBrain : Brain
             }
         }
     }
+
+    public override void OnReceiveDamage()
+    {
+        EnemyBlackboard enemyBlackboard = (EnemyBlackboard)blackboard;
+        if (enemyBlackboard)
+        {
+            ActorFSMMachine fsmMachine = enemyBlackboard.fsmMachine;
+            if (fsmMachine)
+            {
+                fsmMachine.TryTriggerState(actor_fsm_state.actor_fsm_state_damage);
+            }
+        }
+    }
 }

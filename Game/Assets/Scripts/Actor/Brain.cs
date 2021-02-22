@@ -26,6 +26,7 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
         actionList.Add(actor_action_state.actor_action_state_punch, new PunchAction());
         actionList.Add(actor_action_state.actor_action_state_sword_attack, new SwordAttackAction());
         actionList.Add(actor_action_state.actor_action_state_damage, new DamageAction());
+        actionList.Add(actor_action_state.actor_action_state_turn_toward, new TurnTowardAction());
 
         foreach (KeyValuePair<actor_action_state, ActorAction> kv in actionList)
         {
@@ -60,7 +61,7 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
 
     public bool IsGrounded()
     {
-        int nWalkableLayer = LayerMask.NameToLayer("Walkable");
+        int nWalkableLayer = LayerMask.NameToLayer(LayerNames.Walkable);
         RaycastHit hitInfo;
         if (Physics.Raycast(new Ray(transform.position + Vector3.up * 0.15f, Vector3.down), out hitInfo, 0.3f, 1 << nWalkableLayer))
         {
@@ -104,6 +105,11 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
         {
             actionList[actor_action_state.actor_action_state_punch].OnEnter();
         }
+    }
+
+    public void TurnTwardsTarget()
+    {
+        actionList[actor_action_state.actor_action_state_turn_toward].OnEnter();
     }
 
     public void StartNavigation(Vector3 target)
