@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DamageState : ActorFSMState
 {
+    private int nDamageStep = 0;
     public DamageState()
     {
         fsmState = actor_fsm_state.actor_fsm_state_damage;
@@ -22,11 +23,13 @@ public class DamageState : ActorFSMState
     public override void OnEnter(ArrayList arrayParamList = null)
     {
         base.OnEnter(arrayParamList);
-        blackboard.actorBrain.OnDamage();
+        blackboard.actorBrain.OnDamage(nDamageStep);
+        nDamageStep++;
     }
 
     public override void OnExit()
     {
         base.OnExit();
+        nDamageStep = 0;
     }
 }

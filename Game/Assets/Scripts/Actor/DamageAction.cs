@@ -22,10 +22,10 @@ public class DamageAction : ActorAction
 
     public override void OnEnter(ArrayList arrayParamList = null)
     {
-        //if (!IsInDamagableState())
-        //{
-        //    return;
-        //}
+        if (!IsInDamagableState())
+        {
+            return;
+        }
         List<string> attackNames = new List<string>
         {
             "ActorPunch1",
@@ -39,7 +39,19 @@ public class DamageAction : ActorAction
         {
             blackboard.animator.SetBool(attackName, false);
         }
-        animator.SetTrigger(AnimatorParameter.Damage01);
+
+        if (arrayParamList != null)
+        {
+            int nDamageStep = (int)arrayParamList[0];
+            if (nDamageStep > 0)
+            {
+                animator.SetTrigger(AnimatorParameter.Damage02);
+            }
+            else
+            {
+                animator.SetTrigger(AnimatorParameter.Damage01);
+            }
+        }
         blackboard.actorState = actor_action_state.actor_action_state_damage;
     }
 
@@ -50,15 +62,16 @@ public class DamageAction : ActorAction
 
     private bool IsInDamagableState()
     {
-        List<actor_action_state> damagableState = new List<actor_action_state>
-        {
-            actor_action_state.actor_action_state_locomotion
-        };
+        return true;
+        //List<actor_action_state> damagableState = new List<actor_action_state>
+        //{
+        //    actor_action_state.actor_action_state_locomotion
+        //};
 
-        if (damagableState.Contains(blackboard.actorState))
-        {
-            return true;
-        }
-        return false;
+        //if (damagableState.Contains(blackboard.actorState))
+        //{
+        //    return true;
+        //}
+        //return false;
     }
 }

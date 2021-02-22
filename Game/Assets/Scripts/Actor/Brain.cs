@@ -90,9 +90,11 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
         actionList[actor_action_state.actor_action_state_dodge].OnEnter();
     }
 
-    public void OnDamage()
+    public void OnDamage(int nDamageStep = 0)
     {
-        actionList[actor_action_state.actor_action_state_damage].OnEnter();
+        ArrayList arrayList = new ArrayList();
+        arrayList.Add(nDamageStep);
+        actionList[actor_action_state.actor_action_state_damage].OnEnter(arrayList);
     }
 
     public void OnAttackO()
