@@ -85,7 +85,7 @@ public class SwordAttackAction : ActorAction
         autoTriggerNextStep = -1;
         ClearTriggers();
         blackboard.actorState = actor_action_state.actor_action_state_locomotion;
-        Debug.Log("swordAttackAction OnExit()");
+        //Debug.Log("swordAttackAction OnExit()");
     }
 
     public override bool CanTriggerAction()
@@ -111,8 +111,7 @@ public class SwordAttackAction : ActorAction
         {
             blackboard.animator.SetBool(attackNames[i], i == nStep);
         }
-        blackboard.sowrdEffectSocket.PlayEfect(nStep);
-        blackboard.attackRange.ActivateWithTime(0.6f);
+        Debug.Log("TriggerStep : " + nStep);
     }
 
     private void ClearTriggers()

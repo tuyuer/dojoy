@@ -110,6 +110,7 @@ public class InputComponent : MonoBehaviour
         inputControls.Add(new InputControl(InputActionNames.DODGE, KeyCode.E));
         inputControls.Add(new InputControl(InputActionNames.JUMP, KeyCode.Space));
         inputControls.Add(new InputControl(InputActionNames.SHOWSWORD, KeyCode.R));
+        inputControls.Add(new InputControl(InputActionNames.SWORD_ATTACK_UP, KeyCode.Mouse1));
     }
 
     virtual public void OnInitExternalInputs()

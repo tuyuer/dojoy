@@ -13,10 +13,14 @@ public class DamageState : ActorFSMState
     public override void Update(float deltaTime)
     {
         AnimatorStateInfo stateInfo = blackboard.animator.GetCurrentAnimatorStateInfo(0);
-        float normalizedTime = stateInfo.normalizedTime;
-        if (normalizedTime > 0.95f)
+        if (stateInfo.IsName(AnimatorStateName.ActorDamage1) ||
+            stateInfo.IsName(AnimatorStateName.ActorDamage2))
         {
-            OnExit();
+            float normalizedTime = stateInfo.normalizedTime;
+            if (normalizedTime > 0.95f)
+            {
+                OnExit();
+            }
         }
     }
 
@@ -31,5 +35,6 @@ public class DamageState : ActorFSMState
     {
         base.OnExit();
         nDamageStep = 0;
+        Debug.Log("Damage State OnExit");
     }
 }

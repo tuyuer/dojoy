@@ -20,7 +20,6 @@ public class ChasingState : ActorFSMState
         }
         else
         {
-            blackboard.navMeshAgent.isStopped = true;
             OnExit();
         }
     }
@@ -33,5 +32,7 @@ public class ChasingState : ActorFSMState
     public override void OnExit()
     {
         base.OnExit();
+        blackboard.navMeshAgent.isStopped = true;
+        Debug.Log("Chasing State OnExit");
     }
 }

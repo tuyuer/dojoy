@@ -11,6 +11,7 @@ public enum actor_action_state
     actor_action_state_sword_attack = 14,
     actor_action_state_damage = 15,
     actor_action_state_turn_toward = 16,
+    actor_action_state_attack_up = 17,
 };
 
 public enum combo_type

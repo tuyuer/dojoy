@@ -87,7 +87,7 @@ public class PunchAction : ActorAction
         autoTriggerNextStep = -1;
         ClearTriggers();
         blackboard.actorState = actor_action_state.actor_action_state_locomotion;
-        Debug.Log("PunchAction OnExit");
+        //Debug.Log("PunchAction OnExit");
     }
 
     public override bool CanTriggerAction()

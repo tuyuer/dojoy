@@ -56,7 +56,6 @@ public class CombatState : ActorFSMState
         }
         else
         {
-            blackboard.navMeshAgent.isStopped = true;
             OnExit();
         }
     }
@@ -69,5 +68,7 @@ public class CombatState : ActorFSMState
     public override void OnExit()
     {
         base.OnExit();
+        blackboard.navMeshAgent.isStopped = true;
+        Debug.Log("Combat State OnExit");
     }
 }

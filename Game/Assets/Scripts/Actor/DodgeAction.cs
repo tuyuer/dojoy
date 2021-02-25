@@ -23,6 +23,16 @@ public class DodgeAction : ActorAction
         {
             blackboard.characterController.Move(blackboard.actorSpeed);
         }
+
+        AnimatorStateInfo stateInfo = blackboard.animator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.IsName(AnimatorStateName.ActorDodge))
+        {
+            float normalizedTime = stateInfo.normalizedTime;
+            if (normalizedTime > 0.9f)
+            {
+                OnExit();
+            }
+        }
     }
 
     public override void OnEnter(ArrayList arrayParamList = null)

@@ -27,4 +27,5 @@ public class InputActionNames
     public const string DODGE = "DODGE";
     public const string JUMP = "JUMP";
     public const string SHOWSWORD = "SHOWSWORD";
+    public const string SWORD_ATTACK_UP = "SWORD_ATTACK_UP";
 }

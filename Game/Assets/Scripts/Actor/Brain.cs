@@ -27,6 +27,7 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
         actionList.Add(actor_action_state.actor_action_state_sword_attack, new SwordAttackAction());
         actionList.Add(actor_action_state.actor_action_state_damage, new DamageAction());
         actionList.Add(actor_action_state.actor_action_state_turn_toward, new TurnTowardAction());
+        actionList.Add(actor_action_state.actor_action_state_attack_up, new AttackUpAction());
 
         foreach (KeyValuePair<actor_action_state, ActorAction> kv in actionList)
         {
@@ -37,26 +38,7 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
 
     public void Update()
     {
-        //input direction
-        Vector3 actorSpeed = blackboard.moveDir * GlobalDef.ACTOR_MOVE_SPEED * Time.deltaTime;
-
-        //apply gravity
-        actorSpeed.y -= GlobalDef.WORLD_GRAVITY * Time.deltaTime;
-
-        //set actorSpeed to blackboard
-        blackboard.actorSpeed = actorSpeed;
-
-        //update active action in actionList
-        foreach (KeyValuePair<actor_action_state, ActorAction> kv in actionList)
-        {
-            ActorAction actorAction = kv.Value;
-            bool isActionEnabled = actorAction.ActionType == blackboard.actorState;
-            actorAction.setEnabled(isActionEnabled);
-            if (actorAction.IsEnabled)
-            {
-                actorAction.Update(Time.deltaTime);
-            }
-        }
+       
     }
 
     public bool IsGrounded()
@@ -88,6 +70,11 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
     public void OnDodge()
     {
         actionList[actor_action_state.actor_action_state_dodge].OnEnter();
+    }
+
+    public void OnAttackUp()
+    {
+        actionList[actor_action_state.actor_action_state_attack_up].OnEnter();
     }
 
     public void OnDamage(int nDamageStep = 0)
@@ -146,22 +133,6 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
         return bVaultable;
     }
 
-    public void ShowSword(bool bShow)
-    {
-        if (bShow)
-        {
-            blackboard.showSword = true;
-            blackboard.animator.SetBool(AnimatorParameter.ShowSword, true);
-            blackboard.swordSocket.gameObject.SetActive(true);
-        }
-        else
-        {
-            blackboard.showSword = false;
-            blackboard.animator.SetBool(AnimatorParameter.ShowSword, false);
-            blackboard.swordSocket.gameObject.SetActive(false);
-        }
-    }
-
     public void OnShowSword()
     {
         if (!blackboard.showSword)
@@ -187,10 +158,6 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
     public void OnAnimationEnd(string animationName)
     {
         Debug.Log(animationName + " End");
-        if (animationName.Equals(AnimatorParameter.Dodge))
-        {
-            actionList[actor_action_state.actor_action_state_dodge].OnExit();
-        }
     }
 
     //override method for land groud

@@ -36,7 +36,6 @@ public class PatrolState : ActorFSMState
             }
             else
             {
-                blackboard.navMeshAgent.isStopped = true;
                 OnExit();
             }
         }
@@ -52,5 +51,7 @@ public class PatrolState : ActorFSMState
     public override void OnExit()
     {
         base.OnExit();
+        blackboard.navMeshAgent.isStopped = true;
+        Debug.Log("Patrol State OnExit");
     }
 }

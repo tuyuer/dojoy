@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActorBrain : Brain
+public class ActorBrain : Brain, IActorAttackCallback
 {
     private Camera mainCamera;
     private InputComponent inputComponent;
@@ -35,7 +35,26 @@ public class ActorBrain : Brain
     // Update is called once per frame
     void Update()
     {
-        base.Update();
+        //input direction
+        Vector3 actorSpeed = blackboard.moveDir * GlobalDef.ACTOR_MOVE_SPEED * Time.deltaTime;
+
+        //apply gravity
+        actorSpeed.y -= GlobalDef.WORLD_GRAVITY * Time.deltaTime;
+
+        //set actorSpeed to blackboard
+        blackboard.actorSpeed = actorSpeed;
+
+        //update active action in actionList
+        foreach (KeyValuePair<actor_action_state, ActorAction> kv in actionList)
+        {
+            ActorAction actorAction = kv.Value;
+            bool isActionEnabled = actorAction.ActionType == blackboard.actorState;
+            actorAction.setEnabled(isActionEnabled);
+            if (actorAction.IsEnabled)
+            {
+                actorAction.Update(Time.deltaTime);
+            }
+        }
     }
 
 
@@ -57,15 +76,23 @@ public class ActorBrain : Brain
         {
             OnShowSword();
         }
+        else if (action == InputActionNames.SWORD_ATTACK_UP && actionState == input_action_state.press)
+        {
+            OnAttackUp();
+        }
     }
 
     void OnDirectionEvent(Vector2 dir, Vector2 dirRaw, input_action_state inputState)
     {
         //set input dir
+        if (blackboard.actorState == actor_action_state.actor_action_state_dodge ||
+            blackboard.actorState == actor_action_state.actor_action_state_attack_up)
+        {
+            return;
+        }
+
         blackboard.moveDir = CalculateMoveDir(dir, inputState);
     }
-
-
     Vector3 CalculateMoveDir(Vector2 dir, input_action_state inputState)
     {
         if (inputState == input_action_state.release)
@@ -80,5 +107,26 @@ public class ActorBrain : Brain
         Vector3 forwardDir = forward * dir.y;
         Vector3 rightDir = right * dir.x;
         return (forwardDir + rightDir).normalized;
+    }
+
+    //IActorAttackCallback
+    public void OnAttackBegin(string animationName)
+    {
+        //add attack effect
+        int nAttackStep = 0;
+        if (animationName.Equals("SwordAttack1"))
+        {
+            nAttackStep = 0;
+        }
+        else if (animationName.Equals("SwordAttack2"))
+        {
+            nAttackStep = 1;
+        }
+        else if (animationName.Equals("SwordAttack3"))
+        {
+            nAttackStep = 2;
+        }
+        blackboard.sowrdEffectSocket.PlayEffect(nAttackStep);
+        blackboard.attackRange.ActivateWithTime(0.6f);
     }
 }

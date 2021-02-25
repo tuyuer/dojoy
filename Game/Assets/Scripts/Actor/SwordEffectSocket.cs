@@ -18,7 +18,7 @@ public class SwordEffectSocket : MonoBehaviour
 
     }
 
-    public void PlayEfect(int attackStep)
+    public void PlayEffect(int attackStep)
     {
         if (attackStep >=0 && attackStep < swordSlashs.Length)
         {
