@@ -6,6 +6,9 @@ public class AttackRange : MonoBehaviour
 {
     [HideInInspector]
     public SphereCollider attackCollider = null;
+    public ActorAttackInfo[] attackInfos;
+
+    private string curAtkName;
 
     // Start is called before the first frame update
     void Awake()
@@ -27,14 +30,14 @@ public class AttackRange : MonoBehaviour
         {
             //Player Attack Enemy
             Brain brain = other.gameObject.GetComponent<Brain>();
-            brain.OnReceiveDamage();
+            brain.OnReceiveDamage(GetCurrentAttackInfo());
         }
         else if (gameObject.tag == TagDef.AttackRangeEnemy &&
             other.gameObject.tag == TagDef.Player)
         {
             //Enemy Attack Player
             Brain brain = other.gameObject.GetComponent<Brain>();
-            brain.OnReceiveDamage();
+            brain.OnReceiveDamage(GetCurrentAttackInfo());
         }
     }
 
@@ -56,11 +59,31 @@ public class AttackRange : MonoBehaviour
         attackCollider.enabled = false;
     }
 
-    public void ActivateWithTime(float startTime, float lastTime = 0.5f)
+    ActorAttackInfo GetAttackInfoByName(string atkName)
     {
-        CancelInvoke("DisableRange");
+        foreach (ActorAttackInfo atkInfo in attackInfos)
+        {
+            if (atkInfo.attackName.Equals(atkName))
+            {
+                return atkInfo;
+            }
+        }
+        return null;
+    }
+
+    ActorAttackInfo GetCurrentAttackInfo()
+    {
+        return GetAttackInfoByName(curAtkName);
+    }
+
+    public void ActivateWithTime(string atkName,float startTime, float lastTime = 0.5f)
+    {
+        curAtkName = atkName;
+
+        string actionDisableRange = "DisableRange";
+        CancelInvoke(actionDisableRange);
         DisableRange();
         EnableRange();
-        Invoke("DisableRange", lastTime);
+        Invoke(actionDisableRange, lastTime);
     }
 }

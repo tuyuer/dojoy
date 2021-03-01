@@ -40,7 +40,7 @@ public class EnemyBrain : Brain
         }
     }
 
-    public override void OnReceiveDamage()
+    public override void OnReceiveDamage(ActorAttackInfo atkInfo)
     {
         EnemyBlackboard enemyBlackboard = (EnemyBlackboard)blackboard;
         if (enemyBlackboard)
@@ -48,6 +48,7 @@ public class EnemyBrain : Brain
             ActorFSMMachine fsmMachine = enemyBlackboard.fsmMachine;
             if (fsmMachine)
             {
+                enemyBlackboard.attackerAttackInfo = atkInfo;
                 fsmMachine.TryTriggerState(actor_fsm_state.actor_fsm_state_damage);
             }
         }

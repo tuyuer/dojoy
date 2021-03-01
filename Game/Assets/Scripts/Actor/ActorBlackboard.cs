@@ -26,4 +26,7 @@ public class ActorBlackboard : MonoBehaviour
 
     //moving actor by navmeshAngent
     public Vector3 navDestination = Vector3.zero;
+
+    //attack info
+    public ActorAttackInfo attackerAttackInfo;
 }

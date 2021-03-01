@@ -136,6 +136,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCollider: {fileID: 0}
+  attackInfos:
+  - attackName: SwordAttack1
+    attackForce: 1
+  - attackName: SwordAttack2
+    attackForce: 1
+  - attackName: SwordAttack3
+    attackForce: 1
 --- !u!1 &5114213569714636727
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +374,9 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0, z: 0}
   actorSpeed: {x: 0, y: 0, z: 0}
   navDestination: {x: 0, y: 0, z: 0}
+  attackerAttackInfo:
+    attackName: 
+    attackForce: 0
 --- !u!114 &1771078731
 MonoBehaviour:
   m_ObjectHideFlags: 0

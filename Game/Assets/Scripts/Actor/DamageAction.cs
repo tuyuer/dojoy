@@ -14,6 +14,8 @@ public class DamageAction : ActorAction
         AnimatorStateInfo stateInfo = blackboard.animator.GetCurrentAnimatorStateInfo(0);
         float normalizedTime = stateInfo.normalizedTime;
 
+        blackboard.characterController.SimpleMove(Vector3.back * 5);
+
         if (normalizedTime > 0.9f)
         {
             OnExit();
@@ -53,6 +55,12 @@ public class DamageAction : ActorAction
             }
         }
         blackboard.actorState = actor_action_state.actor_action_state_damage;
+    }
+
+    void ReceiveAttack(ActorAttackInfo atkInfo)
+    {
+        blackboard.characterController.SimpleMove(Vector3.up * 100000);
+        Debug.Log("ReceiveAttack .. ");
     }
 
     public override void OnExit()

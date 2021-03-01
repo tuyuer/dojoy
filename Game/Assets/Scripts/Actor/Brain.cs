@@ -149,7 +149,7 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
         }
     }
 
-    public virtual void OnReceiveDamage()
+    public virtual void OnReceiveDamage(ActorAttackInfo atkInfo)
     {
         //Debug.Log("OnReceiveDamage : " + gameObject.name);
     }

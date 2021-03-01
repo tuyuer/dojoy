@@ -114,19 +114,23 @@ public class ActorBrain : Brain, IActorAttackCallback
     {
         //add attack effect
         int nAttackStep = 0;
+        string atkName = "";
         if (animationName.Equals("SwordAttack1"))
         {
             nAttackStep = 0;
+            atkName = "SwordAttack1";
         }
         else if (animationName.Equals("SwordAttack2"))
         {
             nAttackStep = 1;
+            atkName = "SwordAttack2";
         }
         else if (animationName.Equals("SwordAttack3"))
         {
             nAttackStep = 2;
+            atkName = "SwordAttack3";
         }
         blackboard.sowrdEffectSocket.PlayEffect(nAttackStep);
-        blackboard.attackRange.ActivateWithTime(0.6f);
+        blackboard.attackRange.ActivateWithTime(atkName, 0.6f);
     }
 }
