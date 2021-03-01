@@ -11,12 +11,13 @@ public class DamageAction : ActorAction
 
     public override void Update(float deltaTime)
     {
+        blackboard.characterController.SimpleMove(Vector3.back * 5);
+        Debug.Log("isNavEnabled = " + blackboard.navMeshAgent.enabled);
+
         AnimatorStateInfo stateInfo = blackboard.animator.GetCurrentAnimatorStateInfo(0);
         float normalizedTime = stateInfo.normalizedTime;
-
-        blackboard.characterController.SimpleMove(Vector3.back * 5);
-
-        if (normalizedTime > 0.9f)
+        if ((stateInfo.IsName(AnimatorStateName.ActorDamage1) || stateInfo.IsName(AnimatorStateName.ActorDamage2)) &&
+            normalizedTime > 0.9f)
         {
             OnExit();
         }
