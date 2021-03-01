@@ -638,7 +638,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.5308642, y: 1}
+    m_SensorSize: {x: 2.0381944, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 1
@@ -1162,7 +1162,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.5308642, y: 1}
+    m_SensorSize: {x: 2.0381944, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2308,7 +2308,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.5308642, y: 1}
+    m_SensorSize: {x: 2.0381944, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -3281,7 +3281,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.5308642, y: 1}
+    m_SensorSize: {x: 2.0381944, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -3581,15 +3581,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1450565059, guid: bada0b3d479fa2c4f8a2bbc8edf2ec57, type: 3}
       propertyPath: attackInfos.Array.data[0].attackForce
-      value: 1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1450565059, guid: bada0b3d479fa2c4f8a2bbc8edf2ec57, type: 3}
       propertyPath: attackInfos.Array.data[1].attackForce
-      value: 1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1450565059, guid: bada0b3d479fa2c4f8a2bbc8edf2ec57, type: 3}
       propertyPath: attackInfos.Array.data[2].attackForce
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1771078728, guid: bada0b3d479fa2c4f8a2bbc8edf2ec57, type: 3}
       propertyPath: lookObj

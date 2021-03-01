@@ -11,15 +11,17 @@ public class DamageAction : ActorAction
 
     public override void Update(float deltaTime)
     {
-        blackboard.characterController.SimpleMove(Vector3.back * 5);
-        Debug.Log("isNavEnabled = " + blackboard.navMeshAgent.enabled);
-
         AnimatorStateInfo stateInfo = blackboard.animator.GetCurrentAnimatorStateInfo(0);
-        float normalizedTime = stateInfo.normalizedTime;
-        if ((stateInfo.IsName(AnimatorStateName.ActorDamage1) || stateInfo.IsName(AnimatorStateName.ActorDamage2)) &&
-            normalizedTime > 0.9f)
+        if (stateInfo.IsName(AnimatorStateName.ActorDamage1) || 
+            stateInfo.IsName(AnimatorStateName.ActorDamage2))
         {
-            OnExit();
+            float attackForce = blackboard.attackerAttackInfo.attackForce;
+            blackboard.characterController.SimpleMove(blackboard.attackerAttackInfo.attackForce * (- blackboard.actor.forward));
+            float normalizedTime = stateInfo.normalizedTime;
+            if (normalizedTime > 0.9f)
+            {
+                OnExit();
+            }
         }
     }
 
@@ -56,12 +58,14 @@ public class DamageAction : ActorAction
             }
         }
         blackboard.actorState = actor_action_state.actor_action_state_damage;
+
+        ReceiveAttack(blackboard.attackerAttackInfo);
     }
 
     void ReceiveAttack(ActorAttackInfo atkInfo)
     {
-        blackboard.characterController.SimpleMove(Vector3.up * 100000);
-        Debug.Log("ReceiveAttack .. ");
+        Vector3 newFowordDir = atkInfo.Attacker.position - blackboard.actor.position;
+        blackboard.actor.forward = newFowordDir;
     }
 
     public override void OnExit()

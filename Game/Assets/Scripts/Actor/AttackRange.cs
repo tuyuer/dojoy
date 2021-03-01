@@ -30,14 +30,24 @@ public class AttackRange : MonoBehaviour
         {
             //Player Attack Enemy
             Brain brain = other.gameObject.GetComponent<Brain>();
-            brain.OnReceiveDamage(GetCurrentAttackInfo());
+            ActorAttackInfo attackerInfo = GetCurrentAttackInfo();
+            if (attackerInfo != null)
+            {
+                attackerInfo.SetAttacker(gameObject.transform);
+                brain.OnReceiveDamage(attackerInfo);
+            }
         }
         else if (gameObject.tag == TagDef.AttackRangeEnemy &&
             other.gameObject.tag == TagDef.Player)
         {
             //Enemy Attack Player
             Brain brain = other.gameObject.GetComponent<Brain>();
-            brain.OnReceiveDamage(GetCurrentAttackInfo());
+            ActorAttackInfo attackerInfo = GetCurrentAttackInfo();
+            if (attackerInfo != null)
+            {
+                attackerInfo.SetAttacker(gameObject.transform);
+                brain.OnReceiveDamage(attackerInfo);
+            }
         }
     }
 
