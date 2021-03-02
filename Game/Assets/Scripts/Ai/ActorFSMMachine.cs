@@ -7,6 +7,7 @@ public class ActorFSMMachine : MonoBehaviour
     protected ActorBlackboard blackboard;
     protected ActorSense actorSense;
 
+    protected actor_fsm_state lastFsmState = actor_fsm_state.actor_fsm_state_patrol;
     protected Dictionary<actor_fsm_state, ActorFSMState> stateList = new Dictionary<actor_fsm_state, ActorFSMState>();
 
     private void Awake()

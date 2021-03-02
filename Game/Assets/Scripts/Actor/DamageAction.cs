@@ -16,7 +16,15 @@ public class DamageAction : ActorAction
             stateInfo.IsName(AnimatorStateName.ActorDamage2))
         {
             float attackForce = blackboard.attackerAttackInfo.attackForce;
-            blackboard.characterController.SimpleMove(blackboard.attackerAttackInfo.attackForce * (- blackboard.actor.forward));
+            damage_direction damageDirection = blackboard.attackerAttackInfo.damageDirection;
+            if (damageDirection == damage_direction.damage_direction_horizontal)
+            {
+                blackboard.characterController.Move(attackForce * (-blackboard.actor.forward) * deltaTime);
+            }
+            else
+            {
+                blackboard.characterController.Move(attackForce * (blackboard.actor.up) * deltaTime);
+            }
             float normalizedTime = stateInfo.normalizedTime;
             if (normalizedTime > 0.9f)
             {

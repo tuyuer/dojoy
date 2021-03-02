@@ -138,11 +138,14 @@ MonoBehaviour:
   attackCollider: {fileID: 0}
   attackInfos:
   - attackName: SwordAttack1
-    attackForce: 0.3
+    attackForce: 0.03
+    damageDirection: 1
   - attackName: SwordAttack2
-    attackForce: 0.3
+    attackForce: 0.06
+    damageDirection: 1
   - attackName: SwordAttack3
-    attackForce: 3
+    attackForce: 1
+    damageDirection: 2
 --- !u!1 &5114213569714636727
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,6 +380,7 @@ MonoBehaviour:
   attackerAttackInfo:
     attackName: 
     attackForce: 0
+    damageDirection: 0
 --- !u!114 &1771078731
 MonoBehaviour:
   m_ObjectHideFlags: 0

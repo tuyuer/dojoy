@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DamageState : ActorFSMState
 {
+    private float lastTime = 0;
     private int nDamageStep = 0;
     public DamageState()
     {
@@ -19,8 +20,14 @@ public class DamageState : ActorFSMState
             float normalizedTime = stateInfo.normalizedTime;
             if (normalizedTime > 0.95f)
             {
-                OnExit();
+                nDamageStep = 0;
             }
+        }
+
+        lastTime -= deltaTime;
+        if (lastTime < 0)
+        {
+            OnExit();
         }
     }
 
@@ -29,6 +36,7 @@ public class DamageState : ActorFSMState
         base.OnEnter(arrayParamList);
         blackboard.actorBrain.OnDamage(nDamageStep);
         nDamageStep++;
+        lastTime = 2.0f;
     }
 
     public override void OnExit()
