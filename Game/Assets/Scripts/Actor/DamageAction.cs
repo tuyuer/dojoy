@@ -72,8 +72,8 @@ public class DamageAction : ActorAction
 
     void ReceiveAttack(ActorAttackInfo atkInfo)
     {
-        Vector3 newFowordDir = atkInfo.Attacker.position - blackboard.actor.position;
-        blackboard.actor.forward = newFowordDir;
+        //Vector3 newFowordDir = atkInfo.Attacker.position - blackboard.actor.position;
+        //blackboard.actor.forward = newFowordDir;
     }
 
     public override void OnExit()

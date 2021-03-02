@@ -23,6 +23,11 @@ public class DamageState : ActorFSMState
                 nDamageStep = 0;
             }
         }
+        else
+        {
+            Vector3 originVelocity = blackboard.characterController.velocity;
+            blackboard.characterController.Move(new Vector3(0, -GlobalDef.ACTOR_JUMP_SPEED_ACCEL * deltaTime, 0));
+        }
 
         lastTime -= deltaTime;
         if (lastTime < 0)
@@ -36,7 +41,8 @@ public class DamageState : ActorFSMState
         base.OnEnter(arrayParamList);
         blackboard.actorBrain.OnDamage(nDamageStep);
         nDamageStep++;
-        lastTime = 2.0f;
+        lastTime = 200.0f;
+        blackboard.navMeshAgent.enabled = false;
     }
 
     public override void OnExit()
