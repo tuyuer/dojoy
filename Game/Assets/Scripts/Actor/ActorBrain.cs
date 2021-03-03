@@ -88,6 +88,7 @@ public class ActorBrain : Brain, IActorAttackCallback
         if (blackboard.actorState == actor_action_state.actor_action_state_dodge ||
             blackboard.actorState == actor_action_state.actor_action_state_attack_up)
         {
+            blackboard.moveDir = Vector3.zero;
             return;
         }
 

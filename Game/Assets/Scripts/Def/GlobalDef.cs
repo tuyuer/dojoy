@@ -15,7 +15,7 @@ public class GlobalDef
     public const float ACTOR_MOVE_SPEED = 6f;
     public const float ACTOR_VAULT_SPEED = 4f;
     public const float ACTOR_DODGE_SPEED = 6f;
-    public const float ACTOR_JUMP_SPEED = 19.8f;
+    public const float ACTOR_JUMP_SPEED = 17.5f;
     public const float ACTOR_JUMP_SPEED_ACCEL = 18f;
     public const float ACTOR_SWORD_ATTACKUP_SPEED = 16.2f;
     public const float ACTOR_FOWARD_WALK_SPEED = 0.3f;

@@ -41,7 +41,7 @@ public class DamageState : ActorFSMState
         base.OnEnter(arrayParamList);
         blackboard.actorBrain.OnDamage(nDamageStep);
         nDamageStep++;
-        lastTime = 200.0f;
+        lastTime = 2.0f;
         blackboard.navMeshAgent.enabled = false;
     }
 
@@ -49,6 +49,7 @@ public class DamageState : ActorFSMState
     {
         base.OnExit();
         nDamageStep = 0;
+        blackboard.navMeshAgent.enabled = true;
         Debug.Log("Damage State OnExit");
     }
 }

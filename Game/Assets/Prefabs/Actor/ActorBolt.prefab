@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCollider: {fileID: 0}
+  attackInfos: []
 --- !u!1 &2056398816140192372
 GameObject:
   m_ObjectHideFlags: 0
@@ -1851,7 +1852,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: -0.06
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &1014027843
@@ -1942,6 +1943,10 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0, z: 0}
   actorSpeed: {x: 0, y: 0, z: 0}
   navDestination: {x: 0, y: 0, z: 0}
+  attackerAttackInfo:
+    attackName: 
+    attackForce: 0
+    damageDirection: 0
   fsmMachine: {fileID: 7733125103195239489}
 --- !u!1 &3942132761351567209
 GameObject:

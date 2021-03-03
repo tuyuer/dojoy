@@ -121,7 +121,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.8
+  m_Radius: 2.19
   m_Center: {x: 0, y: 0.9, z: 0.2}
 --- !u!114 &1450565059
 MonoBehaviour:
@@ -138,14 +138,14 @@ MonoBehaviour:
   attackCollider: {fileID: 0}
   attackInfos:
   - attackName: SwordAttack1
-    attackForce: 0.03
+    attackForce: 0.2
     damageDirection: 1
   - attackName: SwordAttack2
-    attackForce: 0.06
+    attackForce: 0.4
     damageDirection: 1
   - attackName: SwordAttack3
     attackForce: 1
-    damageDirection: 2
+    damageDirection: 1
 --- !u!1 &5114213569714636727
 GameObject:
   m_ObjectHideFlags: 0
