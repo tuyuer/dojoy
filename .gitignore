@@ -21,6 +21,8 @@ Game/*.pidb
 Game/*.booproj
 Game/*.svd
 Game/*.pdb
+Game/Assets/3DGamekit/Scenes/Data
+Game/Assets/3DGamekit/Scenes/GamePlay
 
 # Unity3D generated meta files
 Game/*.pidb.meta
