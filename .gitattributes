@@ -1,0 +1,2 @@
+Game/Assets/3DGamekit/Scenes/Data/LightingData/Level1/LightingData.asset filter=lfs diff=lfs merge=lfs -text
+Game/Assets/3DGamekit/Scenes/Data/LightingData/Level2/LightingData.asset filter=lfs diff=lfs merge=lfs -text
