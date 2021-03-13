@@ -43,7 +43,7 @@ public class Brain : MonoBehaviour, IActorAnimationCallback
 
     public bool IsGrounded()
     {
-        int nWalkableLayer = LayerMask.NameToLayer(LayerNames.Walkable);
+        int nWalkableLayer = LayerMask.NameToLayer(LayerNames.Terrain);
         RaycastHit hitInfo;
         if (Physics.Raycast(new Ray(transform.position + Vector3.up * 0.15f, Vector3.down), out hitInfo, 0.3f, 1 << nWalkableLayer))
         {
