@@ -1,0 +1,4 @@
+repository "Game@ssl://tuyuer@sh01-plasticscm.unity.cn:8787"
+  path "/"
+    smartbranch "/main/wowo5050" 
+     
